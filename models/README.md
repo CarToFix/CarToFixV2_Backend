@@ -18,8 +18,8 @@ This module contains the abstract class Common, that defines all the attributes 
 - [X] created_at
 - [X] updated_at
 ### Setters:
-- [] oid
-- [] created_at
-- [] updated_at
+- [ ] oid
+- [ ] created_at
+- [ ] updated_at
 ### Behaviors:
 - ``__setattr__()``: Whenever an attribute changes, updated_at is updated automatically
