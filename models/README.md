@@ -25,3 +25,4 @@ This module contains the abstract class Common, that defines all the attributes 
 - ``__setattr__()``: Whenever an attribute changes, updated_at is updated automatically
 ### Abstract:
 - ``to_dict``: Returns a dictionary representation for the instance;
+
