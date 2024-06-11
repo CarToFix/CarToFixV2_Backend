@@ -3,3 +3,4 @@ This repository constitutes all the backend code and construction for the projec
 
 ## Directories:
 ### ./models:
+- ``common.py``: contains the class Common, an abstract class from which all other classes will inherit from
