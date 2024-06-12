@@ -12,6 +12,7 @@ CarToFix permite a los trabajadores del taller acceder a la aplicación desde cu
 - **Registro de nuevos trabajos**: Añade nuevos trabajos asociados a la matrícula del vehículo.
 - **Historial del vehículo**: Accede al historial completo de reparaciones y mantenimiento de cada vehículo.
 - **Reducción de papel**: Facilita la transición a un taller sin papeles.
+- **Presupuesto y aprobación**: Aprobación del presupuesto por parte del cliente via correo electrónico.
 
 ## Uso
 
