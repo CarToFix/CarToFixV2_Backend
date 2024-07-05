@@ -10,13 +10,14 @@
     version: 1.0.0
 """
 
-from art import *
+from art import text2art
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Creating an instance of FastAPI
 app = FastAPI()
-server_version = "1.0.0"
+
+SERVER_VERSION = "1.0.0"
 
 # Defining allowed origins
 origins = [
@@ -40,7 +41,7 @@ async def read_root():
     return {"message": "Hello, CarToFix!"}
 
 # Printing version
-print(text2art(f"CarToFix    server:    {server_version}"))
+print(text2art(f"CarToFix    server:    {SERVER_VERSION}"))
 
 
 # Entry point
