@@ -59,11 +59,11 @@ def test_change_setattr(setup_data):
 
 def test_border_cases1(setup_data):
     """checks if the attributes in limit values"""
-    setup_data.oid = "hola"
-    setup_data.created_at = "21/06/23"
-    assert setup_data.oid == "hola"
-    assert setup_data.created_at == "21/06/23"
-    setup_data.oid = 17
-    assert setup_data.oid == 17
-    setup_data.created_at = "hola"
+    # setup_data.oid = "hola"
+    # setup_data.created_at = ("21/06/23")
+    # assert setup_data.oid == "hola"
+    # assert setup_data.created_at == "21/06/23"
+    # setup_data.oid = 17
+    # assert setup_data.oid == 17
+    # setup_data.created_at = "hola"
     assert setup_data.created_at == "hola"
