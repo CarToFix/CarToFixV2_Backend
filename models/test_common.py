@@ -65,5 +65,5 @@ def test_border_cases1(setup_data):
     # assert setup_data.created_at == "21/06/23"
     # setup_data.oid = 17
     # assert setup_data.oid == 17
-    # setup_data.created_at = "hola"
+    setup_data.created_at = "hola"
     assert setup_data.created_at == "hola"
