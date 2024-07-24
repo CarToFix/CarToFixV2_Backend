@@ -7,17 +7,23 @@
 
 from abc import ABC, abstractmethod
 from datetime import datetime
+import json
 import uuid
+
+from server.v1.utils.version_manager import VersionManager
 
 
 class Common(ABC):
     """ Defines a Common class """
+    version = '0.1.0'
 
     def __init__(self):
         """ Initializes a Common class """
         self.__oid = uuid.uuid4()
         self.__created_at = datetime.utcnow()
         self.__updated_at = datetime.utcnow()
+
+        self.save_version('Common', Common.version)
 
     @property
     def oid(self):
@@ -62,3 +68,12 @@ class Common(ABC):
         if name != '_Common__updated_at':  # Check the correct mangled name
             super().__setattr__('_Common__updated_at', datetime.utcnow())
         super().__setattr__(name, value)
+
+    def save_version(self, c, v):
+        with open('./server/versions.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        data[c] = v
+
+        with open('./server/versions.json', 'w', encoding='utf-8') as f:
+            data = json.dump(data, f, indent=4)      

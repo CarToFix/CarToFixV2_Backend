@@ -1,19 +1,23 @@
 """This module contains the class client which represents the client of the car workshop
 """
 from models.common import Common
+from models.vehicle import Vehicle
 
 
 class Client(Common):
     """ Defines the Client class"""
+    version = '0.1.0'
 
-    def __init__(self, name, mail, tel, veh, oid, creat_at, upt_at):
+    def __init__(self, name, mail, tel, veh):
         """Initialise the class client with all 
         the data from the common class"""
         self.__name = name
         self.__mail = mail
         self.__tel = tel
         self.__vehiculo = veh
-        super.__init__(oid, creat_at, upt_at)
+        super().__init__()
+
+        self.save_version('Client', Client.version)
 
     @property
     def name(self):
@@ -54,26 +58,20 @@ class Client(Common):
     @tel.setter
     def tel(self, newtel):
         """the setter method of tel"""
+        if len(newtel) < 8:
+            raise ValueError("a Telephone should have at least 8 digits")
         if isinstance(newtel, str):
             self.__tel = newtel
         raise TypeError(
             f"The Telephone should be of type String, not {type(newtel)}")
 
     @veh.setter
-    def veh(self, newtel):
+    def veh(self, newveh):
         """the setter method of tel"""
-        self.veh = newtel
+        self.veh = newveh
 
     def to_dict(self):
         """The method to return a dictionary of the class"""
-        dic = {"Name": self.name, "Mail": self.mail, "Telephone": self.tel}
+        dic = {"Name": self.name, "Mail": self.mail,
+               "Telephone": self.tel, "Vehicle": self.veh}
         return dic
-
-    def save(self):
-        """saves any changes in the actual instance
-        and saves it in the class also it updates the updated_at value
-        to the actual time it was updated"""
-
-    def delete(self):
-        """This method will be used for deleting the current instance of
-        the class from the storage"""
