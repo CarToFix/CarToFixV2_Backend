@@ -10,12 +10,11 @@
     version: 1.0.0
 """
 
-from utils.version_manager import VersionManager
-
-
 from art import text2art
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+from utils.version_manager import VersionManager
 
 # Creating an instance of FastAPI
 app = FastAPI()
@@ -48,7 +47,7 @@ print(text2art(f"CarToFix    server:    {SERVER_VERSION}"))
 
 # Saving version and checking file
 vm = VersionManager()
-vm.save_version('BackendServer', '21')
+vm.save_version('BackendServer', SERVER_VERSION)
 vm.check_versions()
 print()
 

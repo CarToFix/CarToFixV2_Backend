@@ -19,18 +19,18 @@ class VersionManager:
 
     def __init__(self):
         """ Initializes a Version Manager """
+        self.filepath = '../versions.json'
         self.check_json_exists()
 
         burl = 'https://raw.githubusercontent.com/CarToFix/CarToFixV2_Backend'
-        self.expected = self.fetch_versions(burl + '/main/versions.json')
-        self.filepath = '../versions.json'
+        self.expected = self.fetch_versions(burl + '/main/server/versions.json')
 
         self.save_version('VersionManger', VersionManager.vmversion)
 
     def check_json_exists(self):
         """ Checks if versions.json file exists """
-        if not os.path.exists('../versions.json'):
-            raise FileNotFoundError("../versions.json: file not found.")
+        if not os.path.exists(self.filepath):
+            raise FileNotFoundError(f"{self.filepath}: file not found.")
 
     def fetch_versions(self, url):
         """ Fetches the correct versions for each class """
@@ -53,7 +53,7 @@ class VersionManager:
 
     def load_got_versions(self):
         """ Load the versions from the versions.json file """
-        with open('../versions.json', 'r', encoding='utf-8') as f:
+        with open(self.filepath, 'r', encoding='utf-8') as f:
             return json.load(f)
 
     def check_versions(self):
@@ -65,7 +65,7 @@ class VersionManager:
                 if v != self.expected[c]:
                     # Print warning with color
                     print(f"{Fore.MAGENTA}Warning: {Style.RESET_ALL}"
-                          f"{Fore.RED}{c}{Style.RESET_ALL} expected version "
+                          f"{Fore.RED}{c}{Style.RESET_ALL} expected local version "
                           f"{Fore.RED}{self.expected[c]}{Style.RESET_ALL} "
                           f"but got {Fore.RED}{v}{Style.RESET_ALL}")
 
@@ -83,6 +83,6 @@ class VersionManager:
                   f"is not found in yet in uploaded {self.filepath}")
 
         for c in exp_not_got:
-             print(f"{Fore.MAGENTA}Warning: {Style.RESET_ALL}"
+            print(f"{Fore.MAGENTA}Warning: {Style.RESET_ALL}"
                   f"{Fore.RED}{c}{Style.RESET_ALL} "
                   f"is not found in local {self.filepath} file")           
