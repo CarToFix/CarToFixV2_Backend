@@ -68,7 +68,13 @@ class Client(Common):
     @veh.setter
     def veh(self, newveh):
         """the setter method of tel"""
-        self.veh = newveh
+        if isinstance(newveh, list):
+            for x in newveh:
+                if not isinstance(x, Vehicle):
+                    raise TypeError(
+                        f"The Vehicle should be of type Vehicle, not {type(newveh)}")
+        raise TypeError(
+            f"The Vehicle should be of type List, not {type(newveh)}")
 
     def to_dict(self):
         """The method to return a dictionary of the class"""
