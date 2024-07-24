@@ -10,6 +10,9 @@
     version: 1.0.0
 """
 
+from utils.version_manager import VersionManager
+
+
 from art import text2art
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -43,6 +46,11 @@ async def read_root():
 # Printing version
 print(text2art(f"CarToFix    server:    {SERVER_VERSION}"))
 
+# Saving version and checking file
+vm = VersionManager()
+vm.save_version('BackendServer', '21')
+vm.check_versions()
+print()
 
 # Entry point
 if __name__ == "__main__":
