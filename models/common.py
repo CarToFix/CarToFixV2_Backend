@@ -11,11 +11,11 @@ import json
 import uuid
 
 from server.v1.utils.version_manager import VersionManager
-
+vm = VersionManager()
 
 class Common(ABC):
     """ Defines a Common class """
-    version = '0.1.0'
+    version = '0.2.0'
 
     def __init__(self):
         """ Initializes a Common class """
@@ -23,7 +23,7 @@ class Common(ABC):
         self.__created_at = datetime.utcnow()
         self.__updated_at = datetime.utcnow()
 
-        self.save_version('Common', Common.version)
+        vm.save_version('Common', Common.version)
 
     @property
     def oid(self):
@@ -56,6 +56,19 @@ class Common(ABC):
 
         self.__created_at = newca
 
+    def check_versions(self):
+        """ Checks the versions by VersionManager """
+        vm.check_versions()
+
+    def save(self):
+        pass
+
+    def delete(self):
+        pass
+    
+    def update(self):
+        pass
+
     @abstractmethod
     def to_dict(self):
         """ Returns a dictionary representation for the instance """
@@ -68,12 +81,3 @@ class Common(ABC):
         if name != '_Common__updated_at':  # Check the correct mangled name
             super().__setattr__('_Common__updated_at', datetime.utcnow())
         super().__setattr__(name, value)
-
-    def save_version(self, c, v):
-        with open('./server/versions.json', 'r', encoding='utf-8') as f:
-            data = json.load(f)
-
-        data[c] = v
-
-        with open('./server/versions.json', 'w', encoding='utf-8') as f:
-            data = json.dump(data, f, indent=4)      
