@@ -1,4 +1,4 @@
-"""This module contains the class client which represents the client of the car workshop
+"""This module contains the class client which represents the client of the car workshops
 """
 from models.common import Common
 from models.vehicle import Vehicle
