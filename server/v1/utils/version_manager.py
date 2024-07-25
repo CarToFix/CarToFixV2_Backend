@@ -19,18 +19,12 @@ class VersionManager:
 
     def __init__(self):
         """ Initializes a Version Manager """
-        self.filepath = '../versions.json'
-        self.check_json_exists()
+        self.filepath = self.find_versions_file()
 
         burl = 'https://raw.githubusercontent.com/CarToFix/CarToFixV2_Backend'
         self.expected = self.fetch_versions(burl + '/main/server/versions.json')
 
         self.save_version('VersionManger', VersionManager.vmversion)
-
-    def check_json_exists(self):
-        """ Checks if versions.json file exists """
-        if not os.path.exists(self.filepath):
-            raise FileNotFoundError(f"{self.filepath}: file not found.")
 
     def fetch_versions(self, url):
         """ Fetches the correct versions for each class """
@@ -86,3 +80,12 @@ class VersionManager:
             print(f"{Fore.MAGENTA}Warning: {Style.RESET_ALL}"
                   f"{Fore.RED}{c}{Style.RESET_ALL} "
                   f"is not found in local {self.filepath} file")           
+
+    def find_versions_file(self):
+        """ Returns the path for the versions.json file """
+        for root, dirs, files in os.walk('.'):
+            if 'versions.json' in files:
+                return os.path.join(root, 'versions.json')
+        
+        err = "versions.json: file not found, please check file exists"
+        raise FileNotFoundError(err)
