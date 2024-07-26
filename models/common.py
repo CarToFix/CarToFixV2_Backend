@@ -16,13 +16,14 @@ vm = VersionManager()
 
 class Common(ABC):
     """ Defines a Common class """
-    version = '0.2.1'
+    version = '0.3.1'
 
     def __init__(self):
         """ Initializes a Common class """
-        self.__oid = uuid.uuid4()
-        self.__created_at = datetime.utcnow()
-        self.__updated_at = datetime.utcnow()
+        self.oid = uuid.uuid4()
+        self.public_oid = uuid.uuid4()
+        self.created_at = datetime.utcnow()
+        self.updated_at = datetime.utcnow()
         self.__version_saved = False
 
         vm.save_version('Common', Common.version)
@@ -55,6 +56,14 @@ class Common(ABC):
 
         self.__oid = newid
 
+    @public_oid.setter
+    def public_oid(self, newid):
+        """ oid setter method """
+        if not isinstance(newid, uuid.UUID):
+            raise TypeError(f"New id must be of type uuid.UUID, not {type(newid)}")
+
+        self.__public_oid = newid
+
     @created_at.setter
     def created_at(self, newca):
         """ created_at setter method """
@@ -75,10 +84,6 @@ class Common(ABC):
         if name != '_Common__updated_at':  # Check the correct mangled name
             super().__setattr__('_Common__updated_at', datetime.utcnow())
         super().__setattr__(name, value)
-
-    def save_version(self, classname, classversion):
-        vm = VersionManager()
-        vm.save_version(classname, classversion)
 
     def save_version(self, classname, classversion):
         """ Saves a the version of a class
