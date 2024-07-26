@@ -44,7 +44,8 @@ class Common(ABC):
     def oid(self, newid):
         """ oid setter method """
         if not isinstance(newid, uuid.UUID):
-            raise TypeError(f"New id must be of type uuid.UUID, not {type(newid)}")
+            raise TypeError(
+                f"New id must be of type uuid.UUID, not {type(newid)}")
 
         self.__oid = newid
 
@@ -52,7 +53,8 @@ class Common(ABC):
     def created_at(self, newca):
         """ created_at setter method """
         if not isinstance(newca, datetime):
-            raise TypeError(f"New created_at must be of type datetime, not {type(newca)}")
+            raise TypeError(
+                f"New created_at must be of type datetime, not {type(newca)}")
 
         self.__created_at = newca
 
@@ -76,4 +78,4 @@ class Common(ABC):
         data[c] = v
 
         with open('./server/versions.json', 'w', encoding='utf-8') as f:
-            data = json.dump(data, f, indent=4)      
+            data = json.dump(data, f, indent=4)
