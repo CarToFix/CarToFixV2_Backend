@@ -13,15 +13,17 @@ import uuid
 from server.v1.utils.version_manager import VersionManager
 vm = VersionManager()
 
+
 class Common(ABC):
     """ Defines a Common class """
-    version = '0.2.0'
+    version = '0.2.1'
 
     def __init__(self):
         """ Initializes a Common class """
         self.__oid = uuid.uuid4()
         self.__created_at = datetime.utcnow()
         self.__updated_at = datetime.utcnow()
+        self.__version_saved = False
 
         vm.save_version('Common', Common.version)
 
@@ -40,6 +42,11 @@ class Common(ABC):
         """ updated_at getter method """
         return self.__updated_at
 
+    @property
+    def version_saved(self):
+        """ updated_at getter method """
+        return self.__version_saved
+
     @oid.setter
     def oid(self, newid):
         """ oid setter method """
@@ -56,19 +63,6 @@ class Common(ABC):
 
         self.__created_at = newca
 
-    def check_versions(self):
-        """ Checks the versions by VersionManager """
-        vm.check_versions()
-
-    def save(self):
-        pass
-
-    def delete(self):
-        pass
-    
-    def update(self):
-        pass
-
     @abstractmethod
     def to_dict(self):
         """ Returns a dictionary representation for the instance """
@@ -81,3 +75,16 @@ class Common(ABC):
         if name != '_Common__updated_at':  # Check the correct mangled name
             super().__setattr__('_Common__updated_at', datetime.utcnow())
         super().__setattr__(name, value)
+
+    def save_version(self, classname, classversion):
+        vm = VersionManager()
+        vm.save_version(classname, classversion)
+
+    def save_version(self, classname, classversion):
+        """ Saves a the version of a class
+            - classname
+            - classversion
+        """
+        if not self.__version_saved:
+            vm.save_version(classname, classversion)
+            self.__version_saved = True

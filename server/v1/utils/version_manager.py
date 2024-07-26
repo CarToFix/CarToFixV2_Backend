@@ -15,14 +15,14 @@ init()
 class VersionManager:
     """ Defines a Version Manager """
 
-    vmversion = '0.1.0'
+    vmversion = '0.1.1'
 
     def __init__(self):
         """ Initializes a Version Manager """
         self.filepath = self.find_versions_file()
 
-        burl = 'https://raw.githubusercontent.com/CarToFix/CarToFixV2_Backend'
-        self.expected = self.fetch_versions(burl + '/main/server/versions.json')
+        burl = 'https://raw.githubusercontent.com/CarToFix/CarToFixV2_Backend/main/'
+        self.expected = self.fetch_versions(burl + 'server/v1/utils/versions.json')
 
         self.save_version('VersionManger', VersionManager.vmversion)
 
@@ -83,9 +83,9 @@ class VersionManager:
 
     def find_versions_file(self):
         """ Returns the path for the versions.json file """
-        for root, dirs, files in os.walk('.'):
+        for root, _, files in os.walk('.'):
             if 'versions.json' in files:
                 return os.path.join(root, 'versions.json')
-        
+
         err = "versions.json: file not found, please check file exists"
         raise FileNotFoundError(err)
