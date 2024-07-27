@@ -5,7 +5,7 @@ from models.common import Common
 
 class Client(Common):
     """ Defines the Client class"""
-    version = '0.1.1'
+    version = '0.1.2'
 
     def __init__(self, name, mail, tel):
         """Initialise the class client with all 
@@ -53,6 +53,8 @@ class Client(Common):
         if isinstance(newmail, str):
             if '@' in newmail:
                 self.__mail = newmail
+            else:
+                raise ValueError("A mail should contain the simbol @")
         else:
             raise TypeError(
                 f"The mail should be of type String, not {type(newmail)}")
