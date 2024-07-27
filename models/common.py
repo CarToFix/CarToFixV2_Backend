@@ -1,8 +1,6 @@
 """ This module contains the class Common,
     that defines all the attributes and methods
     all classes must have
-
-    requires: no installation of external library
 """
 
 from abc import ABC, abstractmethod
@@ -16,12 +14,12 @@ vm = VersionManager()
 
 class Common(ABC):
     """ Defines a Common class """
-    version = '0.3.1'
+    version = '0.3.2'
 
     def __init__(self):
         """ Initializes a Common class """
         self.oid = uuid.uuid4()
-        self.public_oid = uuid.uuid4()
+        self.public_oid = uuid.uuid4()  # Not implemented yet
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
         self.__version_saved = False
@@ -32,6 +30,11 @@ class Common(ABC):
     def oid(self):
         """ oid getter method """
         return self.__oid
+
+    @property
+    def public_oid(self):
+        """ public oid getter method """
+        return self.__public_oid
 
     @property
     def created_at(self):
@@ -58,7 +61,7 @@ class Common(ABC):
 
     @public_oid.setter
     def public_oid(self, newid):
-        """ oid setter method """
+        """ public oid setter method """
         if not isinstance(newid, uuid.UUID):
             raise TypeError(f"New id must be of type uuid.UUID, not {type(newid)}")
 
@@ -72,6 +75,13 @@ class Common(ABC):
 
         self.__created_at = newca
 
+    @updated_at.setter
+    def updated_at(self, newaa):
+        """ updated_at setter method """
+        if not isinstance(newaa, datetime):
+            raise TypeError(f"New updated_at must be of type datetime, not {type(newaa)}")
+        self.__updated_at = newaa
+
     @abstractmethod
     def to_dict(self):
         """ Returns a dictionary representation for the instance """
@@ -81,7 +91,7 @@ class Common(ABC):
             - name: name of the attribute to be updated
             - value: value to be set
         """
-        if name != '_Common__updated_at':  # Check the correct mangled name
+        if name != '_Common__updated_at':
             super().__setattr__('_Common__updated_at', datetime.utcnow())
         super().__setattr__(name, value)
 
