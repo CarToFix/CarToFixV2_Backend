@@ -7,9 +7,9 @@ Created by:
 from models.common import Common
 
 class Employee(Common):
-    """ Defines a Client """
+    """ Defines an Employee """
 
-    version = "1.0.0"
+    version = "1.0.1"
 
     def __init__(self, name, mail, workshop, spe, phone_number, pic=None):
         """ Initialises an Employee instance
@@ -29,8 +29,6 @@ class Employee(Common):
         self.pic = pic
 
         super().__init__()
-        self.save_version("Employee", Employee.version)
-
 
     def to_dict(self):
         """ Returns the dictionary representation for the instance """
