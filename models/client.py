@@ -1,83 +1,99 @@
-"""This module contains the class client which represents the client of the car workshops
+""" This module contains the class client which represents the client of the car workshops
 """
+
+
 from models.common import Common
-from models.vehicle import Vehicle
 
 
 class Client(Common):
-    """ Defines the Client class"""
-    version = '0.1.0'
+    """ Defines a Client """
+    version = '0.3.1'
 
-    def __init__(self, name, mail, tel, veh):
-        """Initialise the class client with all 
-        the data from the common class"""
-        self.__name = name
-        self.__mail = mail
-        self.__tel = tel
-        self.__vehiculo = veh
+    def __init__(self, name, mail, tel):
+        """ Initialises a Client instance 
+            - name: Client's name
+            - mail: Client's mail
+            - tel: Client's phone number
+        """
+        self.name = name
+        self.mail = mail
+        self.tel = tel
+        self.__vehicles = []
         super().__init__()
-
-        self.save_version('Client', Client.version)
 
     @property
     def name(self):
-        """the getter method of name"""
+        """ Getter method for name """
         return self.__name
 
     @property
     def mail(self):
-        """the getter method of mail"""
+        """ Getter method for mail """
         return self.__mail
 
     @property
     def tel(self):
-        """the getter method of tel"""
+        """ Getter method for tel """
         return self.__tel
 
     @property
-    def veh(self):
-        """the getter method of tel"""
-        return self.__vehiculo
+    def vehicles(self):
+        """ Getter method for veh """
+        return self.__vehicles
 
     @name.setter
-    def name(self, newname):
-        """the setter method of name"""
-        if isinstance(newname, str):
-            self.__name = newname
-        raise TypeError(
-            f"The name should be of type String, not {type(newname)}")
+    def name(self, nname):
+        """ Setter method for name """
+        if not isinstance(nname, str):
+            raise TypeError(
+                f"The name should be of type String, not {type(nname)}")
+        if any(c in nname for c in "!@#$%^&*()_+={}[]|\\:;\"'<>,.?/0123456789±÷×∑√∫∞≠∇∆\n\t"):
+            raise ValueError(f"The provided name '{nname}' contains invalid char/s")
+
+        self.__name = nname
 
     @mail.setter
     def mail(self, newmail):
-        """the setter method of mail"""
-        if isinstance(newmail, str):
-            self.__mail = newmail
-        raise TypeError(
-            f"The mail should be of type String, not {type(newmail)}")
+        """ Setter method for mail """
+        if not isinstance(newmail, str):
+            raise TypeError(
+                f"The mail should be of type String, not {type(newmail)}")
+        if '@' not in newmail or '.' not in newmail:
+            raise ValueError("A mail should contain the simbol '@' and '.'")
+        if any(c in newmail for c in "!#$%^&*()_+={}[]| \:;\"'<>,?/±÷×∑√∫∞≠∇∆\n\t"):
+            raise ValueError("The provided mail '{newmail}' contains invalid char/s")
+        
+        self.__mail = newmail
 
     @tel.setter
     def tel(self, newtel):
-        """the setter method of tel"""
+        """ Setter method for tel """
         if len(newtel) < 8:
             raise ValueError("a Telephone should have at least 8 digits")
-        if isinstance(newtel, str):
-            self.__tel = newtel
-        raise TypeError(
-            f"The Telephone should be of type String, not {type(newtel)}")
+        if not isinstance(newtel, str):
+            raise TypeError(
+                f"The Telephone should be of type String, not {type(newtel)}")
+        invalid = "!@#$%^&*()_+={ }[]|\\:;\"'<>,.?/abcdefghijklmnoprstuvwxyz±÷×∑√∫∞≠∇∆\n\t"
+        if any(c in newtel for c in invalid) or any(c in newtel for c in invalid.upper()):
+            raise ValueError(f"New phone '{newtel}' contains invalid char/s")
 
-    @veh.setter
-    def veh(self, newveh):
-        """the setter method of tel"""
+        self.__tel = newtel
+
+    @vehicles.setter
+    def vehicles(self, newveh):
+        """ Getter method for veh """
         if isinstance(newveh, list):
             for x in newveh:
-                if not isinstance(x, Vehicle):
+                if not x.__class__.__name__ == "Vehicle":
                     raise TypeError(
                         f"The Vehicle should be of type Vehicle, not {type(newveh)}")
-        raise TypeError(
-            f"The Vehicle should be of type List, not {type(newveh)}")
+            self.__vehicles.extend(newveh)
+        else:
+            raise TypeError(
+                f"The Vehicle should be of type List, not {type(newveh)}")
 
     def to_dict(self):
-        """The method to return a dictionary of the class"""
-        dic = {"Name": self.name, "Mail": self.mail,
-               "Telephone": self.tel, "Vehicle": self.veh}
+        """ Returns a dictionary representation of the class """
+        dic = {"Name": self.__name, "Mail": self.__mail,
+               "Telephone": self.__tel, "Vehicle": self.__vehicles}
         return dic
