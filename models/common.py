@@ -1,6 +1,9 @@
 """ This module contains the class Common,
     that defines all the attributes and methods
     all classes must have
+
+Created by:
+    Emanuel Trias
 """
 
 from abc import ABC, abstractmethod
@@ -14,12 +17,16 @@ vm = VersionManager()
 
 class Common(ABC):
     """ Defines a Common class """
-    version = '0.3.2'
+    version = '0.4.3'
+
+    def __init_subclass__(cls, **kwargs):
+        """ Defines action to be performed always upon initialization of subclasses """
+        vm.save_version(cls.__name__, cls.version)
 
     def __init__(self):
         """ Initializes a Common class """
         self.oid = uuid.uuid4()
-        self.public_oid = uuid.uuid4()  # Not implemented yet
+        self.public_oid = "Not yet implemented"
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
         self.__version_saved = False
@@ -62,9 +69,6 @@ class Common(ABC):
     @public_oid.setter
     def public_oid(self, newid):
         """ public oid setter method """
-        if not isinstance(newid, uuid.UUID):
-            raise TypeError(f"New id must be of type uuid.UUID, not {type(newid)}")
-
         self.__public_oid = newid
 
     @created_at.setter
