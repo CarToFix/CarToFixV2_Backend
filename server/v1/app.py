@@ -19,7 +19,7 @@ from utils.version_manager import VersionManager
 # Creating an instance of FastAPI
 app = FastAPI()
 
-SERVER_VERSION = "1.0.0"
+SERVER_VERSION = "1.1.0"
 
 # Defining allowed origins
 origins = [
