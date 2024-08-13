@@ -53,7 +53,7 @@ vm.save_version('BackendServer', SERVER_VERSION)
 def check_versions_continuously():
     while True:
         vm.check_versions()
-        time.sleep(3)
+        time.sleep(180)
 
 # Starts a background thread for the function
 thread = threading.Thread(target=check_versions_continuously)

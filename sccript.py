@@ -12,4 +12,3 @@ part = Part("espirochet", "superbranc", "this is a super important part of the e
 pprint(part.__dict__)
 print()
 
-### is left, try to instantiate permission and activate the server, set sleep to 180
