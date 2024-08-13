@@ -4,12 +4,12 @@ Created by:
     Emanuel Trias
 """
 
-from models.common import Common
+from models.workshop_holder_mixin import WorkshopHolderMixin
 
-class Employee(Common):
+class Employee(WorkshopHolderMixin):
     """ Defines an Employee """
 
-    version = "1.0.1"
+    version = "1.1.1"
 
     def __init__(self, name, mail, workshop, spe, phone_number, pic=None):
         """ Initialises an Employee instance
@@ -23,12 +23,11 @@ class Employee(Common):
 
         self.name = name
         self.mail = mail
-        self.workshop = workshop
         self.spe = spe
         self.phone_number = phone_number
         self.pic = pic
 
-        super().__init__()
+        super().__init__(workhop)
 
     def to_dict(self):
         """ Returns the dictionary representation for the instance """
