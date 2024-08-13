@@ -6,20 +6,20 @@
         - fastapi
         - starlette
         - uvicorn
-
-    version: 1.0.0
 """
 
 from art import text2art
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import time
+import threading
 
 from utils.version_manager import VersionManager
 
 # Creating an instance of FastAPI
 app = FastAPI()
 
-SERVER_VERSION = "1.1.0"
+SERVER_VERSION = "1.2.0"
 
 # Defining allowed origins
 origins = [
@@ -45,11 +45,20 @@ async def read_root():
 # Printing version
 print(text2art(f"CarToFix    server:    {SERVER_VERSION}"))
 
-# Saving version and checking file
+# Saving version
 vm = VersionManager()
 vm.save_version('BackendServer', SERVER_VERSION)
-vm.check_versions()
-print()
+
+# Function to run in the background
+def check_versions_continuously():
+    while True:
+        vm.check_versions()
+        time.sleep(3)
+
+# Starts a background thread for the function
+thread = threading.Thread(target=check_versions_continuously)
+thread.daemon = True  # Daemonize the thread to terminate when the main program exits
+thread.start()
 
 # Entry point
 if __name__ == "__main__":
