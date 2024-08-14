@@ -8,7 +8,7 @@ from models.common import Common
 
 class Quote(Common):
     """Define a quote"""
-    version = "1.0.0"
+    version = "1.0.1"
 
     def __init__(self, price, created_by, work, paymeth, garanty, quotes, limitday, sent, activated, confirm, inspect):
         """Inicialice the quote

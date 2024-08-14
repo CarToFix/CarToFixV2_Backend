@@ -8,8 +8,8 @@ from datetime import datetime
 import json
 import uuid
 
-from server.v1.utils.version_manager import VersionManager
-vm = VersionManager()
+"from server.v1.utils.version_manager import VersionManager"
+"vm = VersionManager()"
 
 
 class Common(ABC):
@@ -24,7 +24,7 @@ class Common(ABC):
         self.updated_at = datetime.utcnow()
         self.__version_saved = False
 
-        vm.save_version('Common', Common.version)
+  #      vm.save_version('Common', Common.version)
 
     @property
     def oid(self):
@@ -55,7 +55,8 @@ class Common(ABC):
     def oid(self, newid):
         """ oid setter method """
         if not isinstance(newid, uuid.UUID):
-            raise TypeError(f"New id must be of type uuid.UUID, not {type(newid)}")
+            raise TypeError(
+                f"New id must be of type uuid.UUID, not {type(newid)}")
 
         self.__oid = newid
 
@@ -63,7 +64,8 @@ class Common(ABC):
     def public_oid(self, newid):
         """ public oid setter method """
         if not isinstance(newid, uuid.UUID):
-            raise TypeError(f"New id must be of type uuid.UUID, not {type(newid)}")
+            raise TypeError(
+                f"New id must be of type uuid.UUID, not {type(newid)}")
 
         self.__public_oid = newid
 
@@ -71,7 +73,8 @@ class Common(ABC):
     def created_at(self, newca):
         """ created_at setter method """
         if not isinstance(newca, datetime):
-            raise TypeError(f"New created_at must be of type datetime, not {type(newca)}")
+            raise TypeError(
+                f"New created_at must be of type datetime, not {type(newca)}")
 
         self.__created_at = newca
 
@@ -79,7 +82,8 @@ class Common(ABC):
     def updated_at(self, newaa):
         """ updated_at setter method """
         if not isinstance(newaa, datetime):
-            raise TypeError(f"New updated_at must be of type datetime, not {type(newaa)}")
+            raise TypeError(
+                f"New updated_at must be of type datetime, not {type(newaa)}")
         self.__updated_at = newaa
 
     @abstractmethod
@@ -95,11 +99,11 @@ class Common(ABC):
             super().__setattr__('_Common__updated_at', datetime.utcnow())
         super().__setattr__(name, value)
 
-    def save_version(self, classname, classversion):
+  #  def save_version(self, classname, classversion):
         """ Saves a the version of a class
             - classname
             - classversion
         """
-        if not self.__version_saved:
-            vm.save_version(classname, classversion)
-            self.__version_saved = True
+       # if not self.__version_saved:
+        #    vm.save_version(classname, classversion)
+        #   self.__version_saved = True
