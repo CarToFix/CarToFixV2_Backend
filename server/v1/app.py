@@ -11,13 +11,10 @@
 """
 
 from art import text2art
-from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from utils.version_manager import VersionManager
-
-# Creating an instance of FastAPI
-app = FastAPI()
+from server.v1.views import app
+from server.v1.utils.version_manager import VersionManager
 
 SERVER_VERSION = "1.1.0"
 

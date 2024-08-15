@@ -17,7 +17,7 @@ vm = VersionManager()
 
 class Common(ABC):
     """ Defines a Common class """
-    version = '0.4.3'
+    version = '0.5.3'
 
     def __init_subclass__(cls, **kwargs):
         """ Defines action to be performed always upon initialization of subclasses """
@@ -87,7 +87,7 @@ class Common(ABC):
         self.__updated_at = newaa
 
     @abstractmethod
-    def to_dict(self):
+    def to_dict(self, hide):
         """ Returns a dictionary representation for the instance """
 
     def __hash_uuid(self, input_uuid):
