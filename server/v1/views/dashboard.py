@@ -1,32 +1,18 @@
 from fastapi import APIRouter, Query, HTTPException
 
-#from models.task import Task
+from models.task import Task
+from server.v1.utils.version_manager import VersionManager as VM
 
 
 router = APIRouter()
 
-
-set_versions = {
-    "get_workshop_active_tasks" = ""
-}
+# Save current version
+VERSION = "1.0.0"
+vm = VM()
+vm.save_version("dashboard_routes", VERSION)
 
 
 # Harcoded examples -----------------------------------------
-class Task:
-    def __init__(self, done, title):
-        import uuid
-        self.public_oid = uuid.uuid4()
-        self.done = done
-        self.vehicle = {str(uuid.uuid4()): "future vehicle dictionary"}
-        self.title = title
-        self.description = "future task description"
-        self.note = "future task note"
-        self.parts = ["part1", "part2", "part3"]
-        self.workshop = {str(uuid.uuid4()): "future vehicle dictionary"}
-        self.employees = ["future", "list", "of", "employees"]
-        self.created_by = {str(uuid.uuid4()): "future employee dictionary"}
-        self.quote = {str(uuid.uuid4()): "future quote dictionary"}
-
 titles = [
     "Fix the Invisible Air Conditioner",
     "Unblock the Cosmic Sink",
@@ -63,11 +49,25 @@ titles = [
 
 # Generate 30 tasks
 import random
+import uuid
 tasks = []
 for i in range(30):
+
     done = random.choice([True, False])
     title = titles[i]
-    tasks.append(Task(done=done, title=title))
+    t = Task(
+        title=title,
+        vehicle={str(uuid.uuid4()): "future vehicle dictionary"},
+        desc="future task description",
+        notes="future task note",
+        parts=["part1dict", "part2dict", "part3dict"],
+        wshop={str(uuid.uuid4()): "future vehicle dictionary"},
+        emps=["future", "list", "of", "dicts", "of", "employees"],
+        quote={str(uuid.uuid4()): "future quote dictionary"}
+    )
+
+    t.done = done
+    tasks.append(t)
 
 # ------------------------------------------------------------------------------------------------------------
 
