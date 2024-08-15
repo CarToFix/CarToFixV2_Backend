@@ -6,9 +6,9 @@ Created by:
     Emanuel Trias
 """
 
+import hashlib
 from abc import ABC, abstractmethod
 from datetime import datetime
-import json
 import uuid
 
 from server.v1.utils.version_manager import VersionManager
@@ -26,7 +26,7 @@ class Common(ABC):
     def __init__(self):
         """ Initializes a Common class """
         self.oid = uuid.uuid4()
-        self.public_oid = "Not yet implemented"
+        self.public_oid = self.__hash_uuid(self.oid)
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
         self.__version_saved = False
@@ -89,6 +89,17 @@ class Common(ABC):
     @abstractmethod
     def to_dict(self):
         """ Returns a dictionary representation for the instance """
+
+    def __hash_uuid(self, input_uuid):
+        """ Encodes an UUID using SHA256 algorithm """
+        # Convert the UUID to a string and encode it to bytes
+        uuid_str = str(input_uuid).encode()
+
+        # Hash the UUID using SHA-256
+        hash_object = hashlib.sha256(uuid_str)
+
+        # Return the hexadecimal digest of the hash
+        return hash_object.hexdigest()
 
     def __setattr__(self, name, value):
         """Changes the updated_at attribute when model changes
