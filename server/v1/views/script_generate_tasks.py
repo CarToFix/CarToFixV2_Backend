@@ -96,11 +96,10 @@ def gen_quotes():
         warranty = generate_random_future_date()
         instalments = 4530245
         tasks = copy.deepcopy(random.sample(list_of_tasks, random.randint(1, 10)))
-        wdue_date = warranty + datetime.timedelta(days=-9992)
         pdue_date = warranty + datetime.timedelta(days=3022)
         sent = random.choice([True, False])
         active = random.choice([True, False])
-        confirmed = random.choice([True, False])
+        confirmed = random.choice([datetime.datetime.now(), None])
         inspect = "DONT HAVE A CLUE WHAT IS THIS"
 
         q = Quote(
@@ -110,7 +109,6 @@ def gen_quotes():
             payment_method,
             warranty,
             instalments,
-            wdue_date,
             pdue_date,
             sent,
             active,
@@ -121,7 +119,6 @@ def gen_quotes():
         for task in q.tasks:
             task.quote = q.oid
 
-        q.confirmed_date = datetime.datetime.now()
         quotes.append(q)
 
     return quotes
