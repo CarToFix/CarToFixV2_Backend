@@ -11,17 +11,9 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 import uuid
 
-from server.v1.utils.version_manager import VersionManager
-vm = VersionManager()
-
 
 class Common(ABC):
     """ Defines a Common class """
-    version = '0.5.3'
-
-    def __init_subclass__(cls, **kwargs):
-        """ Defines action to be performed always upon initialization of subclasses """
-        vm.save_version(cls.__name__, cls.version)
 
     def __init__(self):
         """ Initializes a Common class """
@@ -29,9 +21,6 @@ class Common(ABC):
         self.public_oid = self.__hash_uuid(self.oid)
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
-        self.__version_saved = False
-
-        vm.save_version('Common', Common.version)
 
     @property
     def oid(self):
@@ -109,12 +98,3 @@ class Common(ABC):
         if name != '_Common__updated_at':
             super().__setattr__('_Common__updated_at', datetime.utcnow())
         super().__setattr__(name, value)
-
-    def save_version(self, classname, classversion):
-        """ Saves a the version of a class
-            - classname
-            - classversion
-        """
-        if not self.__version_saved:
-            vm.save_version(classname, classversion)
-            self.__version_saved = True
