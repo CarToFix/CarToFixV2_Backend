@@ -8,9 +8,8 @@ from models.common import Common
 
 class Quote(Common):
     """Define a quote"""
-    version = "1.0.0"
 
-    def __init__(self, price, created_by, work, paymeth, garanty, quotes, limitday, sent, activated, confirm, inspect):
+    def __init__(self, price, created_by, work, paymeth, garanty, quotes, ddprice, sent, activated, confirm, inspect):
         """Inicialice the quote
         price: the price of all the work
         Creatby: the token of the employee which created the quote
@@ -18,7 +17,7 @@ class Quote(Common):
         paymeth: the method of payment
         garanty: the garanty of the payment
         quotes: the number of quotes to pay
-        limitday: the limit day to pay the price 
+        ddprice: price due date
         sent: if a mail was sent to the owner
         activated: if the customer acepted the payment
         confirm: if the the payment has been confirmed
@@ -26,14 +25,14 @@ class Quote(Common):
         """
         self.price = price
         self.created_by = created_by
-        self.work = work
-        self.paymeth = paymeth
-        self.garanty = garanty
+        self.tasks = work
+        self.payment_method = paymeth
+        self.warranty = garanty
         self.quotes = quotes
-        self.limitday = limitday
+        self.price_due_date = ddprice
         self.sent = sent
         self.activated = activated
-        self.confirm = confirm
+        self.confirmed = confirm
         self.inspect = inspect
         super().__init__()
 

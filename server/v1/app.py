@@ -2,21 +2,14 @@
     and handles the server initialization
 
     requires:
-        - art
         - fastapi
         - starlette
         - uvicorn
-
-    version: 1.0.0
 """
 
-from art import text2art
 from fastapi.middleware.cors import CORSMiddleware
 
 from server.v1.views import app
-from server.v1.utils.version_manager import VersionManager
-
-SERVER_VERSION = "1.1.0"
 
 # Defining allowed origins
 origins = [
@@ -38,15 +31,6 @@ app.add_middleware(
 async def read_root():
     """ Defines a simple get method for / """
     return {"message": "Hello, CarToFix!"}
-
-# Printing version
-print(text2art(f"CarToFix    server:    {SERVER_VERSION}"))
-
-# Saving version and checking file
-vm = VersionManager()
-vm.save_version('BackendServer', SERVER_VERSION)
-vm.check_versions()
-print()
 
 # Entry point
 if __name__ == "__main__":
