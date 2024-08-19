@@ -10,7 +10,7 @@ from models.common import Common
 class Permission(Common):
     """ Defines the permissions to which an Employee can access """
 
-    version = "1.0.0"
+    version = "1.0.1"
 
     def __init__(self, name, desc, allowed=True):
         """ Initializes a Permission 
@@ -21,3 +21,4 @@ class Permission(Common):
         self.name = name
         self.description = desc
         self.allowed = allowed
+        super().__init__()

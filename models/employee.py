@@ -4,9 +4,10 @@ Created by:
     Emanuel Trias
 """
 
-from models.workshop_holder_mixin import WorkshopHolderMixin
+from models.workshop_holder_mixin import WhorkshopHolderMixin
 
-class Employee(WorkshopHolderMixin):
+
+class Employee(WhorkshopHolderMixin):
     """ Defines an Employee """
 
     version = "1.1.1"
@@ -27,7 +28,7 @@ class Employee(WorkshopHolderMixin):
         self.phone_number = phone_number
         self.pic = pic
 
-        super().__init__(workhop)
+        super().__init__(workshop)
 
     def to_dict(self):
         """ Returns the dictionary representation for the instance """

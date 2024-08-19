@@ -4,13 +4,13 @@ Created by:
     Emanuel Trias
 """
 
-from models.workshop_holder_mixin import WorkshopHolderMixin
+from models.workshop_holder_mixin import WhorkshopHolderMixin
 
 
-class Part(WorkshopHolderMixin):
+class Part(WhorkshopHolderMixin):
     """ Defines a Part of a Vehicle """
 
-    version = "1.0.0"
+    version = "1.0.1"
 
     def __init__(self, name, brand, description, model, size, workhop):
         """ Initializes a Part
