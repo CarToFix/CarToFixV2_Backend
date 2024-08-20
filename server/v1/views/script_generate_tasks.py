@@ -1,10 +1,14 @@
 from models.task import Task
 from models.quote import Quote
+from models.employee import Employee
+from models.workshop import Workshop
 
 import random
+import string
 import copy
 import uuid
 import datetime
+
 
 
 def gen_tasks():
@@ -122,3 +126,20 @@ def gen_quotes():
         quotes.append(q)
 
     return quotes
+
+brands = ["Toyota", "Honda", "Ford", "Chevrolet", "Nissan", "BMW", "Mercedes-Benz", "Audi", "Hyundai", "Volkswagen"]
+models = [
+    ["Camry", "Corolla", "Highlander", "RAV4", "Prius"],  # Toyota models
+    ["Civic", "Accord", "CR-V", "Pilot", "Fit"],          # Honda models
+    ["F-150", "Mustang", "Explorer", "Fusion", "Escape"], # Ford models
+    ["Silverado", "Malibu", "Tahoe", "Impala", "Equinox"],# Chevrolet models
+    ["Altima", "Sentra", "Rogue", "Murano", "Maxima"],    # Nissan models
+    ["3 Series", "X5", "5 Series", "X3", "7 Series"],     # BMW models
+    ["C-Class", "E-Class", "GLC", "GLE", "S-Class"],      # Mercedes-Benz models
+    ["A4", "Q5", "A6", "Q7", "A3"],                       # Audi models
+    ["Elantra", "Sonata", "Santa Fe", "Tucson", "Kona"],  # Hyundai models
+    ["Golf", "Passat", "Tiguan", "Jetta", "Atlas"]        # Volkswagen models
+]
+generate_fake_plate = lambda: ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+get_brand = lambda: random.choice(brands)
+get_model = lambda brand: random.choice(models[brands.index(brand)])
