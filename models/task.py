@@ -10,8 +10,6 @@ from models.common import Common
 class Task(Common):
     """ Defines a Task """
 
-    version = "1.0.0"
-
     def __init__(self, vehicle, title, desc, notes, parts, wshop, emps, quote):
         """ Initializes a Task
             - vehicle: vehicle in which to carry the task on
@@ -31,9 +29,25 @@ class Task(Common):
         self.workshop = wshop
         self.employees = emps
         self.quote = quote
+        self.fully_initialised = False
 
         super().__init__()
 
-    def to_dict(self):
-        """ Returns a dictionary representation for the Task """
-        return self.__dict__
+    def to_dict(self, hide):
+        """ Returns a dictionary representation for the Task
+            - hide: determines which attributes to hide or return
+        """
+        task_dict = {}
+        hide_keys = hide.get("hide", []) if hide else []
+        show_keys = hide.get("show", []) if hide else []
+
+        for k, value in self.__dict__.items():
+            hide_match = any(hide_key in k for hide_key in hide_keys)
+            show_match = any(show_key in k for show_key in show_keys)
+
+            if hide_match or (show_keys and not show_match):
+                continue
+
+            task_dict[k] = value
+
+        return task_dict

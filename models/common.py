@@ -42,11 +42,6 @@ class Common(ABC):
         """ updated_at getter method """
         return self.__updated_at
 
-    @property
-    def version_saved(self):
-        """ updated_at getter method """
-        return self.__version_saved
-
     @oid.setter
     def oid(self, newid):
         """ oid setter method """
