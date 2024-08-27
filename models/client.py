@@ -1,22 +1,20 @@
 """This module contains the class client which represents the client of the car workshops
 """
-from models.common import Common
+from models.workshop import Workshop
+from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
 
 
-class Client(Common):
+class Client(Workshop):
     """ Defines the Client class"""
-    version = '0.1.2'
+    version = '1.1.2'
 
-    def __init__(self, name, mail, tel):
-        """Initialise the class client with all 
-        the data from the common class"""
-        self.name = name
-        self.mail = mail
-        self.tel = tel
-        self.vehicle = None
-        super().__init__()
-
-        self.save_version('Client', Client.version)
+    __tablename__ = 'Clients'
+    names = Column(String(60), nullable=False)
+    email = Column(String(60), nullable=False)
+    telephone = Column(String(10), nullable=False)
+    vehicles = relationship("vehicle", backref="Client",
+                            cascade="all, delete, delete-orphan")
 
     @property
     def name(self):
