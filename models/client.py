@@ -1,19 +1,19 @@
 """This module contains the class client which represents the client of the car workshops
 """
-from models.workshop import Workshop
+from models.workshop_holder_mixin import WhorkshopHolderMixin
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 
-class Client(Workshop):
+class Client(WhorkshopHolderMixin):
     """ Defines the Client class"""
     version = '1.1.2'
 
-    __tablename__ = 'Clients'
+    __tablename__ = 'clients'
     names = Column(String(60), nullable=False)
     email = Column(String(60), nullable=False)
     telephone = Column(String(10), nullable=False)
-    vehicles = relationship("vehicle", backref="Client",
+    vehicles = relationship("vehicles", backref="clients",
                             cascade="all, delete, delete-orphan")
 
     @property
