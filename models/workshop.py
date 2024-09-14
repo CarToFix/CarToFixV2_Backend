@@ -15,9 +15,11 @@ class Workshop(Common):
 
     __tablename__ = "workshops"
     mail = Column(String(20), nullable=False)
-    password = Column(String(10), nullable=False)
+    password = Column(String(20), nullable=False)
     name = Column(String(20), nullable=False)
     phone = Column(String(10), nullable=False)
+    city = Column(String(20), nullable=False)
+    direction = Column(String(40), nullable=False)
     workers = relationship("employees", backref="workshops")
     vehicles = relationship("vehicles", backref="workshops")
     parts = relationship("parts", backref="workshops")
