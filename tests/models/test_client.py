@@ -4,10 +4,11 @@ Tested by: Emanuel Trias
 """
 
 import inspect
+
 import pytest
 
-from models.client import Client
-from models.vehicle import Vehicle
+from . import Client
+from . import Vehicle
 
 
 class TestClient:
