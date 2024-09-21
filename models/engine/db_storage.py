@@ -1,52 +1,46 @@
-"""
-    Contains the class DBStorage
-    
-    
+""" Contains the class DBStorage
+
     Requirements:
             pip install sqlalchemy python-dotenv 
             common class need:
                 from sqlalchemy.ext.declarative import declarative_base
                 Base = declarative_base()
+
+    Created by:
+            Santiago Caritat
     """
 import os
-from dotenv import load_dotenv
 from models.common import Base 
+import dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-
-
-classes = {
-    
-}
+dotenv.load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../setup.env'))
+CONNECTION_STRING = os.getenv('CARTOFIX_DB_CONNECTION_STRING')
 
 
 class DBStorage:
-    version = '0.1.0'
+    classes = {}
     __engine = None
     __session = None
 
     def __init__(self):
         """Instantiate a DBStorage object"""
-        load_dotenv()
-        db_user = os.getenv('CARTOFIX_USERNAME')
-        db_password = os.getenv('CARTOFIX_PASSWORD')
-        db_host = os.getenv('CARTOFIX_HOST')
-        db_name = os.getenv('CARTOFIX_DATABASE')
-        self.__engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}/{db_name}')
-        Base.metadata.create_all(self.__engine)
+        self.__engine = create_engine(CONNECTION_STRING)
+        self.reload()
 
     def all(self, cls=None):
         """query on the current database session"""
         if self.__session is None:
             raise Exception("Session is not initialized")
-        
+
         new_dict = {}
+        classes = DBStorage.classes
         for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
+            if cls is None or cls is DBStorage.classes[clss] or cls is clss:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
+                    key = obj.__class__.__name__ + '.' + obj.oid
                     new_dict[key] = obj
         return new_dict
 
@@ -86,7 +80,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """Returns the object based on the class name and its ID, or None if not found"""
-        if cls not in classes.values():
+        if cls not in DBStorage.classes.values():
             return None
 
         all_cls = self.all(cls)
@@ -96,7 +90,7 @@ class DBStorage:
         """count the number of objects in storage"""
         if self.__session is None:
             raise Exception("Session is not initialized")
-        
+
         if not cls:
             count = 0
             for clas in classes.values():
@@ -104,3 +98,7 @@ class DBStorage:
         else:
             count = len(self.all(cls))
         return count
+
+    def get_session(self):
+        """Return the session."""
+        return self.__session
