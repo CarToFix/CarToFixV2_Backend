@@ -10,17 +10,19 @@
             Santiago Caritat
     """
 import os
-from models.common import Base 
 import dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
+from models.common import Base 
+from models.client import Client
 
 dotenv.load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../setup.env'))
 CONNECTION_STRING = os.getenv('CARTOFIX_DB_CONNECTION_STRING')
 
 
 class DBStorage:
-    classes = {}
+    classes = {'client': Client}
     __engine = None
     __session = None
 
@@ -102,3 +104,6 @@ class DBStorage:
     def get_session(self):
         """Return the session."""
         return self.__session
+
+    def drop_all_tables(self):
+        Base.metadata.drop_all(self.__engine)
