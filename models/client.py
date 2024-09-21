@@ -18,7 +18,7 @@ class Client(Common):
         self.name = name
         self.mail = mail
         self.tel = tel
-        self.__vehicles = []
+        self.vehicles = []
         super().__init__()
 
     @property
