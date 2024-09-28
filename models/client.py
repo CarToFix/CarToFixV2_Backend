@@ -1,24 +1,34 @@
 """ This module contains the class client which represents the client of the car workshops
 """
 
+from sqlalchemy import Column, String, DateTime
+from sqlalchemy.orm import relationship
 
-from models.common import Common
+from models.common import Common, Base
 
 
-class Client(Common):
+class Client(Common, Base):
     """ Defines a Client """
-    version = '0.3.1'
 
-    def __init__(self, name, mail, tel):
+    __tablename__ = 'clients'
+    oid = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    __name = Column("name", String(60), nullable=False)  # Use internal attributes
+    __mail = Column("mail", String(60), nullable=False)
+    __phone_number = Column("phone_number", String(10), nullable=False)
+
+    # Vehicles not available yet
+    #__vehicles = relationship("vehicles", backref="clients", cascade="all, delete, delete-orphan")
+
+    def __init__(self, name, mail, phone_number):
         """ Initialises a Client instance 
             - name: Client's name
             - mail: Client's mail
             - tel: Client's phone number
         """
-        self.name = name
-        self.mail = mail
-        self.tel = tel
-        self.vehicles = []
+        self.__name = name
+        self.__mail = mail
+        self.__phone_number = phone_number
+        self.__vehicles = []
         super().__init__()
 
     @property
@@ -32,13 +42,13 @@ class Client(Common):
         return self.__mail
 
     @property
-    def tel(self):
-        """ Getter method for tel """
-        return self.__tel
+    def phone_number(self):
+        """ Getter method for phone number """
+        return self.__phone_number
 
     @property
     def vehicles(self):
-        """ Getter method for veh """
+        """ Getter method for vehicles """
         return self.__vehicles
 
     @name.setter
@@ -65,19 +75,19 @@ class Client(Common):
         
         self.__mail = newmail
 
-    @tel.setter
-    def tel(self, newtel):
+    @phone_number.setter
+    def phone_number(self, newtel):
         """ Setter method for tel """
         if len(newtel) < 8:
-            raise ValueError("a Telephone should have at least 8 digits")
+            raise ValueError("phone_number should have at least 8 digits")
         if not isinstance(newtel, str):
             raise TypeError(
-                f"The Telephone should be of type String, not {type(newtel)}")
+                f"phone_number should be of type String, not {type(newtel)}")
         invalid = "!@#$%^&*()_+={ }[]|\\:;\"'<>,.?/abcdefghijklmnoprstuvwxyz±÷×∑√∫∞≠∇∆\n\t"
         if any(c in newtel for c in invalid) or any(c in newtel for c in invalid.upper()):
-            raise ValueError(f"New phone '{newtel}' contains invalid char/s")
+            raise ValueError(f"phone_number '{newtel}' contains invalid char/s")
 
-        self.__tel = newtel
+        self.__phone_number = newtel
 
     @vehicles.setter
     def vehicles(self, newveh):
@@ -92,8 +102,15 @@ class Client(Common):
             raise TypeError(
                 f"The Vehicle should be of type List, not {type(newveh)}")
 
-    def to_dict(self):
-        """ Returns a dictionary representation of the class """
-        dic = {"Name": self.__name, "Mail": self.__mail,
-               "Telephone": self.__tel, "Vehicle": self.__vehicles}
+    def to_dict(self, hors):
+        """ Returns a dictionary representation of the class 
+            - hors: hidde or show, dictionary that defines which attributes to return
+        """
+        dic = {}
+        
+        for k, v in self.__dict__.items():
+            # Check if the key should be shown or hidden
+            if k in hors.get('show', []) and k not in hors.get('hide', []):
+                dic[k.split('__', 1)[-1]] = v  # Use everything after the first '__'
+        
         return dic

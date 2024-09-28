@@ -12,10 +12,12 @@ from sqlalchemy.orm import declarative_base
 from datetime import datetime
 import uuid
 
+import models
+
 Base = declarative_base()
 
 
-class Common(ABC):
+class Common():
     """ Defines a Common class """
 
     def __init__(self):
@@ -73,9 +75,15 @@ class Common(ABC):
             raise TypeError(f"New updated_at must be of type datetime, not {type(newaa)}")
         self.__updated_at = newaa
 
-    @abstractmethod
     def to_dict(self, hide):
         """ Returns a dictionary representation for the instance """
+
+    def save(self):
+        """ Saves the instance to the database """
+        models.storage.new(self)   # Instance is added to the session
+        models.storage.save()  # Instance is saved to the db
+
+        print(f"New instance {self.__public_oid} of type: {type(self).__name__} was created!")
 
     def __hash_uuid(self, input_uuid):
         """ Encodes an UUID using SHA256 algorithm """
