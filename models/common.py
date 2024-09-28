@@ -8,8 +8,11 @@ Created by:
 
 import hashlib
 from abc import ABC, abstractmethod
+from sqlalchemy.orm import declarative_base
 from datetime import datetime
 import uuid
+
+Base = declarative_base()
 
 
 class Common(ABC):
@@ -86,10 +89,18 @@ class Common(ABC):
         return hash_object.hexdigest()
 
     def __setattr__(self, name, value):
-        """Changes the updated_at attribute when model changes
+        """ Changes the updated_at attribute when model changes
             - name: name of the attribute to be updated
             - value: value to be set
         """
         if name != '_Common__updated_at':
             super().__setattr__('_Common__updated_at', datetime.utcnow())
         super().__setattr__(name, value)
+
+    def __eq__(self, other):
+        """ Defines a custom comparison operator """
+        if not isinstance(other, self.__class__):
+            return False
+
+        # Checks both objects have the same attributes and their values are equal
+        return self.__dict__ == other.__dict__
