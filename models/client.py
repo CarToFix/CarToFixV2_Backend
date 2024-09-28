@@ -20,7 +20,11 @@ class Client(Common, Base):
     #__vehicles = relationship("vehicles", backref="clients", cascade="all, delete, delete-orphan")
 
     def __init__(self, name, mail, phone_number):
-        """ Initializes a Client instance. """
+        """ Initialises a Client instance 
+            - name: Client's name
+            - mail: Client's mail
+            - tel: Client's phone number
+        """
         self.__name = name
         self.__mail = mail
         self.__phone_number = phone_number
