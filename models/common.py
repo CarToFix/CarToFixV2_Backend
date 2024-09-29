@@ -7,21 +7,31 @@ Created by:
 """
 
 import hashlib
-from abc import ABC, abstractmethod
-from sqlalchemy.orm import declarative_base
-from datetime import datetime
 import uuid
+from abc import ABCMeta, abstractmethod
+from datetime import datetime
+
+from sqlalchemy import Column, DateTime
+from sqlalchemy.dialects.postgresql import UUID as PGUUID
+from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 
 import models
 
+# SQLAlchemy Base
 Base = declarative_base()
 
+class AbstractDeclarativeMeta(ABCMeta, DeclarativeMeta):
+    """ Custom metaclass combining ABCMeta and DeclarativeMeta """
 
-class Common():
-    """ Defines a Common class """
+class Common(Base, metaclass=AbstractDeclarativeMeta):
+    """ Defines an abstract Common class """
+    __abstract__ = True  # Prevents the creation of a Common table
+
+    _oid = Column(PGUUID(as_uuid=True), primary_key=True, unique=True, nullable=False)
+    _created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    _updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     def __init__(self):
-        """ Initializes a Common class """
         self.oid = uuid.uuid4()
         self.public_oid = self.__hash_uuid(self.oid)
         self.created_at = datetime.utcnow()
@@ -30,22 +40,22 @@ class Common():
     @property
     def oid(self):
         """ oid getter method """
-        return self.__oid
+        return self._oid
 
     @property
     def public_oid(self):
         """ public oid getter method """
-        return self.__public_oid
+        return self._public_oid
 
     @property
     def created_at(self):
         """ created_at getter method """
-        return self.__created_at
+        return self._created_at
 
     @property
     def updated_at(self):
         """ updated_at getter method """
-        return self.__updated_at
+        return self._updated_at
 
     @oid.setter
     def oid(self, newid):
@@ -53,12 +63,12 @@ class Common():
         if not isinstance(newid, uuid.UUID):
             raise TypeError(f"New id must be of type uuid.UUID, not {type(newid)}")
 
-        self.__oid = newid
+        self._oid = newid
 
     @public_oid.setter
     def public_oid(self, newid):
         """ public oid setter method """
-        self.__public_oid = newid
+        self._public_oid = newid
 
     @created_at.setter
     def created_at(self, newca):
@@ -66,15 +76,16 @@ class Common():
         if not isinstance(newca, datetime):
             raise TypeError(f"New created_at must be of type datetime, not {type(newca)}")
 
-        self.__created_at = newca
+        self._created_at = newca
 
     @updated_at.setter
     def updated_at(self, newaa):
         """ updated_at setter method """
         if not isinstance(newaa, datetime):
             raise TypeError(f"New updated_at must be of type datetime, not {type(newaa)}")
-        self.__updated_at = newaa
+        self._updated_at = newaa
 
+    @abstractmethod
     def to_dict(self, hide):
         """ Returns a dictionary representation for the instance """
 
@@ -83,7 +94,7 @@ class Common():
         models.storage.new(self)   # Instance is added to the session
         models.storage.save()  # Instance is saved to the db
 
-        print(f"New instance {self.__public_oid} of type: {type(self).__name__} was created!")
+        print(f"New instance {self._public_oid} of type: {type(self).__name__} was created!")
 
     def __hash_uuid(self, input_uuid):
         """ Encodes an UUID using SHA256 algorithm """
