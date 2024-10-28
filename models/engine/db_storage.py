@@ -31,7 +31,19 @@ CONNECTION_STRING = os.getenv('CDB_CS')
 
 
 class DBStorage:
-    classes = {'client': Client}
+    classes = {
+        'client': Client,
+        'employee': Employee,
+        'part': Part,
+        'quote': Quote,
+        'specialisation': Specialisation,
+        'task': Task,
+        'vehicle': Vehicle,
+        'vehicle_model': VehicleModel,
+        'vehicle_brand': VehicleBrand,
+        'vehicle_type': VehicleType,
+        'workshop': Workshop
+    }
     __engine = None
     __session = None
 

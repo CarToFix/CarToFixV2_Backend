@@ -15,9 +15,6 @@ class Employee(Common):
     name          = Column(String(60), nullable=False)
     mail          = Column(String(60), nullable=False)
     phone_number  = Column(String(10), nullable=False)
-    #spe = Column()
-    #pic = Column()
-    #workshop = Column()
 
     def __init__(self, name, mail, workshop, spe, phone_number, pic=None):
         """ Initialises an Employee instance

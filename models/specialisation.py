@@ -3,9 +3,10 @@
 Created by:
     Leonardo Rodriguez
 """
-from sqlalchemy import Column, String, JSONB
+from sqlalchemy import Column, String
+from sqlalchemy.dialects.postgresql import JSONB
 
-from common import Common
+from models.common import Common
 
 
 class Specialisation(Common):
