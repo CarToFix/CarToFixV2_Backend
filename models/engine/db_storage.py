@@ -10,14 +10,12 @@
             Santiago Caritat
     """
 import os
-import dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from models.common import Base 
 from models.client import Client
 
-dotenv.load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../setup.env'))
 CONNECTION_STRING = os.getenv('CARTOFIX_DB_CONNECTION_STRING')
 
 
@@ -42,7 +40,7 @@ class DBStorage:
             if cls is None or cls is DBStorage.classes[clss] or cls is clss:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.oid
+                    key = obj.__class__.__name__ + '.' + str(obj.oid)
                     new_dict[key] = obj
         return new_dict
 

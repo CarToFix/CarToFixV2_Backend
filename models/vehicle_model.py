@@ -4,13 +4,13 @@ Created by:
     Leonardo Rodriguez
 """
 
-from models.workshop_holder_mixin import WhorkshopHolderMixin
+from models.common import Common
 
-
-class VehicleModel(WhorkshopHolderMixin):
+class VehicleModel(Common):
     """the class vehicle brand that represents the model of a Vehicle"""
 
-    version = "1.0.0"
+    __tablename__ = 'vehicle_models'
+    name          = Column(String, nullable=False)
 
     def __init__(self, workshop, name):
         """
@@ -20,7 +20,7 @@ class VehicleModel(WhorkshopHolderMixin):
         Mach V of speed racer which V is the model name
         """
         self.name = name
-        super().__init__(workshop)
+        super().__init__()
 
     def to_dict(self):
         """Returns a dictionary representation for the instance"""

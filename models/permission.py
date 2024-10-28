@@ -7,10 +7,8 @@ Created by:
 from models.common import Common
 
 
-class Permission(Common):
+class Permission():
     """ Defines the permissions to which an Employee can access """
-
-    version = "1.0.1"
 
     def __init__(self, name, desc, allowed=True):
         """ Initializes a Permission 

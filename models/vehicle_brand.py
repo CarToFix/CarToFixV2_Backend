@@ -4,22 +4,21 @@ Created by:
     Leonardo Rodriguez
 """
 
-from models.workshop_holder_mixin import WhorkshopHolderMixin
+from models.common import Common
 
+class VehicleBrand(Common):
+    """ Defines a Vehicle Brand"""
 
-class VehicleBrand(WhorkshopHolderMixin):
-    """the class vehicle brand that represents the brand of a Vehicle"""
-
-    version = "1.0.0"
+    __tablename__ = 'vehicle_brands'
+    name          = Column(String, nullable=False)
 
     def __init__(self, name, workshop):
-        """
-        initialice a brand of a vehicle
-        -name: The brand name
-        -workshop: From which workshop it is the data
+        """ Initialises a Brand
+            - name ....... Brand name
+            - workshop ... Workshop
         """
         self.name = name
-        super().__init__(workshop)
+        super().__init__()
 
     def to_dict(self):
         """Returns a dictionary representation for the instance"""
