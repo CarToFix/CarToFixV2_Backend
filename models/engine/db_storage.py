@@ -15,6 +15,17 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from models.common import Base 
 from models.client import Client
+from models.employee import Employee
+from models.part import Part
+from models.quote import Quote
+from models.specialisation import Specialisation
+from models.task import Task
+from models.vehicle import Vehicle
+from models.vehicle_model import VehicleModel
+from models.vehicle_brand import VehicleBrand
+from models.vehicle_type import VehicleType
+from models.workshop import Workshop
+
 
 CONNECTION_STRING = os.getenv('CDB_CS')
 
@@ -93,7 +104,7 @@ class DBStorage:
 
         if not cls:
             count = 0
-            for clas in classes.values():
+            for clas in DBStorage.classes.values():
                 count += len(self.all(clas))
         else:
             count = len(self.all(cls))
