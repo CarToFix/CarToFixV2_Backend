@@ -6,7 +6,6 @@ from .dashboard import router as drouter
 from .clients import router as crouter
 from .employees import route as erouter
 from .parts import router as prouter
-from .permission import router as perouter
 from .quotes import router as qrouter
 from .specialisations import router as srouter
 from .vehicle_brand import router as vbrouter
@@ -27,7 +26,6 @@ base_router.include_router(drouter)
 base_router.include_router(crouter)
 base_router.include_router(erouter)
 base_router.include_router(prouter)
-base_router.include_router(perouter)
 base_router.include_router(qrouter)
 base_router.include_router(srouter)
 base_router.include_router(vbrouter)
