@@ -9,13 +9,14 @@ from models.common import Common
 class Workshop(Common):
     """the class workshop that represents the workshop"""
 
-    version = "1.0.0"
+        __tablename__ = 'workshops'
+        mail          = Column(String, nullable=False)
+        name          = Column(String, nullable=False)
+        tel           = Column(String, nullable=False)
 
     def __init__(self, mail, password, name, tel, veh, work, part, emp, owner):
         """
         initialice a workshop
-        mail: the mail of the workshop
-        password: the password of the acount
         name: name of the workshop
         tel: contact phone
         veh: list of vehicles of the workshop
@@ -23,15 +24,14 @@ class Workshop(Common):
         emp: list of employees of the worshop
         owner: the owner of the workshop
         """
-        self.mail = mail
-        self.password = password
-        self.name = name
-        self.tel = tel
-        self.veh = veh
-        self.work = work
-        self.part = part
-        self.emp = emp
-        self.owner = owner
+        self.mail     = mail
+        self.name     = name
+        self.tel      = tel
+        self.veh      = veh
+        self.work     = work
+        self.part     = part
+        self.emp      = emp
+        self.owner    = owner
         super().__init__()
 
     def to_dict(self):

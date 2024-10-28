@@ -1,27 +1,30 @@
-"""This module contains the class specialisation that represents the specialisation of a worker
+""" This module contains the class specialisation that represents the specialisation of a worker
 
 Created by:
-    Leonardo Rodriguez"""
+    Leonardo Rodriguez
+"""
 
-from models.workshop_holder_mixin import WhorkshopHolderMixin
+from common import Common
 
 
-class Specialisation(WhorkshopHolderMixin):
-    """the class Specialisation that represents the specialisation of a worker"""
+class Specialisation(Common):
+    """ Specialisation of a employee """
 
-    version = "1.0.0"
+    __tablename__ = 'specialisations'
+    area          = Column(String, nullable=False)
+    permissions   = Column(JSONB, nullable=True)
 
     def __init__(self, workshop, area, employee, permission):
+        """ Initialises a Specialisation
+            - area .......... area of specialisation
+            - employee ...... list of employees who have this specialisation 
+            - permission .... list of permissions of each specialisation
         """
-        initialice a specialisation
-        area: this is the area of specialization for example mechanic
-        employee: this is represents the list of employees who have this specialization 
-        permission: this is a list of permissions of every specialization
-        """
-        self.area = area
-        self.employee = employee
+        self.area       = area
+        self.employee   = employee
         self.permission = permission
-        super().__init__(workshop)
+
+        super().__init__()
 
     def to_dict(self):
         """Returns a dictionary representation for the instance"""

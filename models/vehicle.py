@@ -3,13 +3,16 @@
 Created by:
     Leonardo Rodriguez"""
 
-from models.workshop_holder_mixin import WhorkshopHolderMixin
+from models.common import Common
 
-
-class Vehicle(WhorkshopHolderMixin):
+class Vehicle(Common):
     """the class vehicle that represents the Vehicle"""
 
-    version = "1.0.0"
+    __tablename__ = 'vehicles'
+    plate         = Column(String, nullable=False, unique=True)
+    color         = Column(String, nullable=False)
+    miles         = Column(Integer, nullable=False)
+    info          = Column(String, nullable=True)
 
     def __init__(self, workshop, plate, vtype, brand, model, color, miles, owner, work, info):
         """
@@ -32,8 +35,8 @@ class Vehicle(WhorkshopHolderMixin):
         self.color = color
         self.miles = miles
         self.owner = owner
-        self.work = work
-        self.info = info
+        self.work  = work
+        self.info  = info
         super().__init__(workshop)
 
     def to_dict(self):

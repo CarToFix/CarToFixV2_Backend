@@ -4,13 +4,20 @@ Created by:
     Emanuel Trias
 """
 
-from models.workshop_holder_mixin import WhorkshopHolderMixin
+from sqlalchemy import Column, String
+from models.Common import Common
 
 
-class Employee(WhorkshopHolderMixin):
+class Employee(Common):
     """ Defines an Employee """
 
-    version = "1.1.1"
+    __tablename__ = 'employees'
+    name          = Column(String(60), nullable=False)
+    mail          = Column(String(60), nullable=False)
+    phone_number  = Column(String(10), nullable=False)
+    #spe = Column()
+    #pic = Column()
+    #workshop = Column()
 
     def __init__(self, name, mail, workshop, spe, phone_number, pic=None):
         """ Initialises an Employee instance
@@ -21,14 +28,14 @@ class Employee(WhorkshopHolderMixin):
             - phone_number: Employee's phone_number
             - pic: Employee's path to picture
         """
+        super().__init__()
 
         self.name = name
         self.mail = mail
         self.spe = spe
         self.phone_number = phone_number
+        self.workhop = workhop
         self.pic = pic
-
-        super().__init__(workshop)
 
     def to_dict(self):
         """ Returns the dictionary representation for the instance """
