@@ -3,6 +3,7 @@
 Created by:
     Leonardo Rodriguez
 """
+from sqlalchemy import Column, String, JSONB
 
 from common import Common
 

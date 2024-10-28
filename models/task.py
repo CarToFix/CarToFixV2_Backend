@@ -3,6 +3,7 @@
 Created by:
     Emanuel Trias
 """
+from sqlalchemy import Column, String, Boolean
 
 from models.common import Common
 

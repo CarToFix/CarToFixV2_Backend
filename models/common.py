@@ -44,7 +44,7 @@ class Common(Base, metaclass=AbstractDeclarativeMeta):
     def save(self):
         """ Saves the instance to the database """
         models.storage.new(self)   # Instance is added to the session
-        models.storage.save()  # Instance is saved to the db
+        models.storage.save()      # Instance is saved to the db
 
         print(f"New instance {self.public_oid} of type: {type(self).__name__} was created!")
 

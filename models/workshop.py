@@ -2,6 +2,7 @@
 
 Created by:
     Leonardo Rodriguez"""
+from sqlalchemy import Column, String
 
 from models.common import Common
 
@@ -9,10 +10,10 @@ from models.common import Common
 class Workshop(Common):
     """the class workshop that represents the workshop"""
 
-        __tablename__ = 'workshops'
-        mail          = Column(String, nullable=False)
-        name          = Column(String, nullable=False)
-        tel           = Column(String, nullable=False)
+    __tablename__ = 'workshops'
+    mail          = Column(String, nullable=False)
+    name          = Column(String, nullable=False)
+    tel           = Column(String, nullable=False)
 
     def __init__(self, mail, password, name, tel, veh, work, part, emp, owner):
         """

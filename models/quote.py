@@ -2,6 +2,7 @@
 
 created by Leonardo Rodriguez
 """
+from sqlalchemy import Column, String, Integer, Float, Date, Boolean
 
 from models.common import Common
 
@@ -9,6 +10,7 @@ from models.common import Common
 class Quote(Common):
     """ Defines a Quote """
 
+    __tablename__ = 'quotes'
     price          = Column(Float, nullable=False)
     payment_method = Column(String, nullable=False)
     warranty       = Column(String, nullable=True)

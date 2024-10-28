@@ -3,6 +3,8 @@
 Created by:
     Leonardo Rodriguez
 """
+from sqlalchemy import Column, String
+
 
 from models.common import Common
 
