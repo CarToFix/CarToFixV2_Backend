@@ -9,16 +9,16 @@ router = APIRouter()  # creates a route
 
 class CreateVehicle(BaseModel):
     """defines the Vehicle class"""
-    plate = str
-    vtype = str
-    brand = str
-    model = str
-    color = str
-    miles = str
-    owner = str
-    work = str
-    info = str
-    workshop = str
+    plate: str
+    vtype: str
+    brand: str
+    model: str
+    color: str
+    miles: str
+    owner: str
+    work: str
+    info: str
+    workshop: str
 
 
 @router.post("/vehicles", status_code=201)

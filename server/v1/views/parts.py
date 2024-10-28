@@ -9,13 +9,13 @@ router = APIRouter()  # creates a route
 
 class CreatePart(BaseModel):
     """defines the Part class"""
-    name = str
-    brand = str
-    description = str
-    model = str
-    size = str
-    workshop = str
-    status = str
+    name: str
+    brand: str
+    description: str
+    model: str
+    size: str
+    workshop: str
+    status: str
 
 
 @router.post("/parts", status_code=201)

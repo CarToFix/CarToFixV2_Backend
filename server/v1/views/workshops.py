@@ -9,19 +9,19 @@ route = APIRouter()  # creates a route
 
 class CreateWorkshop(BaseModel):
     """defines the workshop class"""
-    mail = str
-    password = str
-    name = str
-    tel = str
-    veh = str
-    work = str
-    part = str
-    emp = str
-    owner = str
+    mail: str
+    password: str
+    name: str
+    tel: str
+    veh: str
+    work: str
+    part: str
+    emp: str
+    owner: str
 
 
 @route.post("/workshop", status_code=201)
-async def create_work(client_request: CreateWorkshop):
+async def create_workshop(client_request: CreateWorkshop):
     """Create and saves the workshop"""
     workshop = Workshop(mail=client_request.mail,
                         password=client_request.password, name=client_request.name,

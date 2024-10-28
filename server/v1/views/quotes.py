@@ -9,22 +9,22 @@ router = APIRouter()  # creates a route
 
 class CreateQuote(BaseModel):
     """defines the Quote class"""
-    price = int
-    created_by = str
-    work = str
-    paymeth = str
-    garanty = str
-    quotes = int
-    ddprice = int
-    sent = bool
-    activated = bool
-    confirm = bool
-    vehicle = str
-    workshop = str
+    price: int
+    created_by: str
+    work: str
+    paymeth: str
+    garanty: str
+    quotes: int
+    ddprice: int
+    sent: bool
+    activated: bool
+    confirm: bool
+    vehicle: str
+    workshop: str
 
 
 @router.post("/quotes", status_code=201)
-async def create_part(client_request: CreateQuote):
+async def create_quote(client_request: CreateQuote):
     """Create and saves the Quote"""
     quote = Quote(price=client_request.price, created_by=client_request.created_by, work=client_request.work, paymeth=client_request.paymeth, garanty=client_request.garanty,
                   quotes=client_request.quotes, ddprice=client_request.ddprice, sent=client_request.sent, activated=client_request.activated, confirm=client_request.confirm, vehicle=client_request.vehicle)

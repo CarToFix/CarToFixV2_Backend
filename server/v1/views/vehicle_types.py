@@ -9,18 +9,17 @@ router = APIRouter()  # creates a route
 
 class CreateVehicleType(BaseModel):
     """defines the Vehicle Type class"""
-    name = str
+    name: str
 
 
 @router.post("/vehicle_types", status_code=201)
 async def create_vehicle_type(client_request: CreateVehicleType):
     """Create and saves the Vehicle Type"""
-    vtype = VehicleType(name=client_request.name,
-                        workshop=client_request.workshop)
+    vtype = VehicleType(name=client_request.name)
 
     vtype.save()
 
     vtdict = vtype.to_dict(
-        {'show': ['name', 'workshop']})
+        {'show': ['name']})
 
     return {"message": "Vehicle Type has been created successfully"}.update(vtdict)

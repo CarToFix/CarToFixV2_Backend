@@ -20,7 +20,7 @@ class CreatePermission(BaseModel):
 
 
 @router.post("/permissions", status_code=201)
-async def create_cat(client_request: CreatePermission):
+async def create_permission(client_request: CreatePermission):
     """ Creates and saves a new permission instance """
     # Instance of client is created
     per = Permission(name=client_request.name,

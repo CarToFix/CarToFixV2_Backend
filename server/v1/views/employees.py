@@ -9,12 +9,12 @@ route = APIRouter()  # creates a route
 
 class CreateEmployee(BaseModel):
     """defines the employee class"""
-    name = str
-    mail = str
-    phone_number = str
-    speciality = str
-    picture = str
-    workshop = str
+    name: str
+    mail: str
+    phone_number: str
+    speciality: str
+    picture: str
+    workshop: str
 
 
 @route.post("/employees", status_code=201)
@@ -28,4 +28,4 @@ async def create_employee(client_request: CreateEmployee):
     edict = employee.to_dict(
         {'show': ['name', 'mail', 'phone_number', 'spe', 'pic', 'workshop']})
 
-    return {"message": "the employee has been created successfully"}.update(wdict)
+    return {"message": "the employee has been created successfully"}.update(edict)
