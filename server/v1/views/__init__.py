@@ -13,7 +13,6 @@ from .vehicle_model import router as vmrouter
 from .vehicle_types import router as vtrouter
 from .vehicles import router as vrouter
 from .workshops import route as wrouter
-from .tasks import router as trouter
 # HERE YOU IMPORT NEW ROUTERS
 
 
@@ -33,7 +32,7 @@ base_router.include_router(vmrouter)
 base_router.include_router(vtrouter)
 base_router.include_router(vrouter)
 base_router.include_router(wrouter)
-base_router.include_router(trouter)
+
 # HERE YOU ADD NEW ROUTERS
 
 # Create FastAPI app
