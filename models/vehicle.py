@@ -2,6 +2,9 @@
 
 Created by:
     Leonardo Rodriguez"""
+    
+from sqlalchemy import Column, String, Integer
+
 
 from models.common import Common
 

@@ -16,7 +16,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from models.common import Base 
 from models.client import Client
 
-CONNECTION_STRING = os.getenv('CARTOFIX_DB_CONNECTION_STRING')
+CONNECTION_STRING = os.getenv('CDB_CS')
 
 
 class DBStorage:

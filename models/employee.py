@@ -5,7 +5,7 @@ Created by:
 """
 
 from sqlalchemy import Column, String
-from models.Common import Common
+from models.common import Common
 
 
 class Employee(Common):
