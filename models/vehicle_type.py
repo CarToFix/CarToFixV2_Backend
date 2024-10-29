@@ -12,9 +12,9 @@ class VehicleType(Common):
     """the class vehicle brand that represents the type of a Vehicle"""
 
     __tablename__ = 'vehicle_types'
-    name          = Column(String, nullable=False)
+    name = Column(String, nullable=False)
 
-    def __init__(self, name, workshop):
+    def __init__(self, name):
         """
         initialice a brand of a vehicle
         -name: The type of vehicle name examples bike or car

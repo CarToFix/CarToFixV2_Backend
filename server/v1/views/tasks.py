@@ -10,7 +10,6 @@ router = APIRouter()
 
 class CreateTask(BaseModel):
     """defines the employee class"""
-    done: bool
     vehicle: str
     title: str
     description: str
@@ -18,9 +17,7 @@ class CreateTask(BaseModel):
     part: str
     workshop: str
     employee: str
-    createdby: str
-    budget: str
-    active: str
+    quote: str
     workshop: str
 
 
@@ -33,11 +30,11 @@ async def get_workshop_active_tasks(workshop_name: str = Query(..., description=
 @router.post("/tasks", status_code=201)
 async def create_task(client_request: CreateTask):
     """Create and saves the Tasks"""
-    task = Task(done=client_request.done, vehicle=client_request.vehicle, title=client_request.title, desc=client_request.description, notes=client_request.note,
-                parts=client_request.part, wshop=client_request.workshop, emps=client_request.employee, createdby=client_request.createdby, budget=client_request.budget)
+    task = Task(vehicle=client_request.vehicle, title=client_request.title, desc=client_request.description, notes=client_request.note,
+                parts=client_request.part, wshop=client_request.workshop, emps=client_request.employee, quote=client_request.quote)
     task.save()
 
     tdict = task.to_dict(
-        {'show': ['done', 'title', 'description', 'notes', 'part', 'workshop', 'employee', 'vehicle', 'createdby', 'budget']})
+        {'show': ['done', 'title', 'description', 'notes', 'part', 'workshop', 'employee', 'vehicle', 'budget']})
 
     return {"message": "the task has been created successfully"}.update(tdict)

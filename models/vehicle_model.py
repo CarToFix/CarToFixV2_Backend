@@ -8,13 +8,14 @@ from sqlalchemy import Column, String
 
 from models.common import Common
 
+
 class VehicleModel(Common):
     """the class vehicle brand that represents the model of a Vehicle"""
 
     __tablename__ = 'vehicle_models'
-    name          = Column(String, nullable=False)
+    name = Column(String, nullable=False)
 
-    def __init__(self, workshop, name):
+    def __init__(self, name):
         """
         initialice a brand of a vehicle
         -workshop: From which workshop it is the data
