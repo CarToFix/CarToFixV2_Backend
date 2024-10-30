@@ -19,7 +19,7 @@ async def create_vehicle_brand(client_request: CreateVehicleBrand):
 
     brand.save()
 
-    bdict = brand.to_dict(
-        {'show': ['name']})
-
+    # bdict = brand.to_dict(
+    #   {'show': ['name']})
+    bdict = brand.to_dict()
     return {"message": "the Vehicle Brand has been created successfully"}.update(bdict)

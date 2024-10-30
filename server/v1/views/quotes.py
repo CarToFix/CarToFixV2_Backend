@@ -3,7 +3,7 @@
 from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException, APIRouter
 from models.quote import Quote
-
+from datetime import datetime
 router = APIRouter()  # creates a route
 
 
@@ -15,7 +15,7 @@ class CreateQuote(BaseModel):
     payment: str
     warranty: str
     instalments: int
-    ddprice: int
+    ddprice: datetime
     sent: bool
     active: bool
     confirmed: bool
@@ -31,7 +31,7 @@ async def create_quote(client_request: CreateQuote):
 
     quote.save()
 
-   qdict = quote.to_dict(
-        {'show': ['price', 'created_by' 'task', 'payment', 'warranty', 'installments', 'ddprice', 'sent', 'active', 'confirmed', 'vehicle']})
-
+    # qdict = quote.to_dict(
+    #   {'show': ['price', 'created_by' 'task', 'payment', 'warranty', 'installments', 'ddprice', 'sent', 'active', 'confirmed', 'vehicle']})
+    qdict = quote.to_dict()
     return {"message": "the Quote has been created successfully"}.update(qdict)

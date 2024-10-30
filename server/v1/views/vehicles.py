@@ -31,7 +31,7 @@ async def create_vehicle(client_request: CreateVehicle):
 
     vehicles.save()
 
-    vdict = vehicles.to_dict(
-        {'show': ['plate', 'vtype', 'brand', 'model', 'color', 'miles', 'owner', 'work', 'info', 'workshop']})
-
+    # vdict = vehicles.to_dict(
+    #    {'show': ['plate', 'vtype', 'brand', 'model', 'color', 'miles', 'owner', 'work', 'info', 'workshop']})
+    vdict = vehicles.to_dict()
     return {"message": "the Vehicle has been created successfully"}.update(vdict)

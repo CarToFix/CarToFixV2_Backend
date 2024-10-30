@@ -26,7 +26,7 @@ async def create_part(client_request: CreatePart):
 
     part.save()
 
-    pdict = part.to_dict(
-        {'show': ['name', 'brand', 'description', 'model', 'size', 'status' 'workshop']})
-
+    # pdict = part.to_dict(
+    #    {'show': ['name', 'brand', 'description', 'model', 'size', 'status' 'workshop']})
+    pdict = part.to_dict()
     return {"message": "the part has been created successfully"}.update(pdict)

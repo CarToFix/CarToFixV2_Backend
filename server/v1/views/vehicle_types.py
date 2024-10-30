@@ -19,7 +19,7 @@ async def create_vehicle_type(client_request: CreateVehicleType):
 
     vtype.save()
 
-    vtdict = vtype.to_dict(
-        {'show': ['name']})
-
+    # vtdict = vtype.to_dict(
+    #   {'show': ['name']})
+    vtdict = vtype.to_dict()
     return {"message": "Vehicle Type has been created successfully"}.update(vtdict)

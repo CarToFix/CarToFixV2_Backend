@@ -30,7 +30,7 @@ async def create_workshop(client_request: CreateWorkshop):
 
     workshop.save()
 
-    wdict = workshop.to_dict(
-        {'show': ['mail', 'password', 'name', 'tel', 'veh', 'work', 'part', 'emp', 'owner']})
-
+    # wdict = workshop.to_dict(
+    #    {'show': ['mail', 'password', 'name', 'tel', 'veh', 'work', 'part', 'emp', 'owner']})
+    wdict = workshop.to_dict()
     return {"message": "the workshop has been created successfully"}.update(wdict)

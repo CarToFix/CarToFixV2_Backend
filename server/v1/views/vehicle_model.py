@@ -19,6 +19,6 @@ async def create_vehicle_model(client_request: CreateVehicleModel):
 
     model.save()
 
-    mdict = model.to_dict({'show': ['name']})
-
+    # mdict = model.to_dict({'show': ['name']})
+    mdict = model.to_dict()
     return {"message": "Vehicle Model has been created successfully"}.update(mdict)
