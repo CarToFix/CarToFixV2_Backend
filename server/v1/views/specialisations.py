@@ -23,7 +23,7 @@ async def create_specialisation(client_request: CreateSpecialization):
 
     specialisation.save()
 
-    sdict = specialisation.to_dict(
-        {'show': ['area', 'employee', 'permision', 'workshop']})
-
+    # sdict = specialisation.to_dict(
+    #    {'show': ['area', 'employee', 'permision', 'workshop']})
+    sdict = specialisation.to_dict()
     return {"message": "the Quote has been created successfully"}.update(sdict)

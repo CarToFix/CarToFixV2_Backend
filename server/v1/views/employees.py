@@ -25,7 +25,7 @@ async def create_employee(client_request: CreateEmployee):
 
     employee.save()
 
-    edict = employee.to_dict(
-        {'show': ['name', 'mail', 'phone_number', 'spe', 'pic', 'workshop']})
-
+    # edict = employee.to_dict(
+    #    {'show': ['name', 'mail', 'phone_number', 'spe', 'pic', 'workshop']})
+    edict = employee.to_dict()
     return {"message": "the employee has been created successfully"}.update(edict)
