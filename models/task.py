@@ -41,21 +41,16 @@ class Task(Common):
 
         super().__init__()
 
-    def to_dict(self, hide):
-        """ Returns a dictionary representation for the Task
-            - hide: determines which attributes to hide or return
+    def to_dict(self, hors={}):
+        """ Returns a dictionary representation of the class 
+            - hors: hidde or show, dictionary that defines which attributes to return
         """
-        task_dict = {}
-        hide_keys = hide.get("hide", []) if hide else []
-        show_keys = hide.get("show", []) if hide else []
+        dic = {}
 
-        for k, value in self.__dict__.items():
-            hide_match = any(hide_key in k for hide_key in hide_keys)
-            show_match = any(show_key in k for show_key in show_keys)
+        for k, v in self.__dict__.items():
+            # Check if the key should be shown or hidden
+            if k in hors.get('show', []) or k not in hors.get('hide', []):
+                dic[k.split('__', 1)[-1]] = v  # Use everything after the first '__'
 
-            if hide_match or (show_keys and not show_match):
-                continue
 
-            task_dict[k] = value
-
-        return task_dict
+        return dic

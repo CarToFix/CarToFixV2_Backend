@@ -75,7 +75,7 @@ class Client(Common):
                 f"The Vehicle should be of type List, not {type(newveh)}")
     """
 
-    def to_dict(self, hors):
+    def to_dict(self, hors={}):
         """ Returns a dictionary representation of the class 
             - hors: hidde or show, dictionary that defines which attributes to return
         """
@@ -83,7 +83,8 @@ class Client(Common):
 
         for k, v in self.__dict__.items():
             # Check if the key should be shown or hidden
-            if k in hors.get('show', []) and k not in hors.get('hide', []):
+            if k in hors.get('show', []) or k not in hors.get('hide', []):
                 dic[k.split('__', 1)[-1]] = v  # Use everything after the first '__'
+
 
         return dic
