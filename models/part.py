@@ -12,9 +12,9 @@ class Part(Common):
     """ Defines a Part of a Vehicle """
 
     __tablename__    = 'parts'
-    self.name        = Column(String(30), nullable=False)
-    self.description = Column(String(160), nullable=False)
-    self.size        = Column(Integer, nullable=False)
+    name        = Column(String(30), nullable=False)
+    description = Column(String(160), nullable=False)
+    size        = Column(Integer, nullable=False)
 
     def __init__(self, name, brand, description, model, size, workhop):
         """ Initializes a Part6
@@ -24,7 +24,7 @@ class Part(Common):
             - model: Part's model
             - size: Part's size
         """
-        super().__init__(workhop)
+        super().__init__()
 
         self.name = name
         self.brand = brand
