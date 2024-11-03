@@ -4,6 +4,15 @@ from fastapi import FastAPI, APIRouter
 from .tasks import router as trouter
 from .dashboard import router as drouter
 from .clients import router as crouter
+from .employees import route as erouter
+from .parts import router as prouter
+from .quotes import router as qrouter
+from .specialisations import router as srouter
+from .vehicle_brand import router as vbrouter
+from .vehicle_model import router as vmrouter
+from .vehicle_types import router as vtrouter
+from .vehicles import router as vrouter
+from .workshops import route as wrouter
 # HERE YOU IMPORT NEW ROUTERS
 
 
@@ -14,6 +23,16 @@ base_router = APIRouter(prefix="/api/v1")
 base_router.include_router(trouter)
 base_router.include_router(drouter)
 base_router.include_router(crouter)
+base_router.include_router(erouter)
+base_router.include_router(prouter)
+base_router.include_router(qrouter)
+base_router.include_router(srouter)
+base_router.include_router(vbrouter)
+base_router.include_router(vmrouter)
+base_router.include_router(vtrouter)
+base_router.include_router(vrouter)
+base_router.include_router(wrouter)
+
 # HERE YOU ADD NEW ROUTERS
 
 # Create FastAPI app

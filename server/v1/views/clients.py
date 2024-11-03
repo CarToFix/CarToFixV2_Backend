@@ -33,7 +33,8 @@ async def create_cat(client_request: CreateClient):
     client.save()
 
     # Define a dictionary of client containing the chosen attributes
-    cdict = client.to_dict({'show': ['name', 'phone_number', 'mail', 'public_oid']})
+    cdict = client.to_dict(
+        {'show': ['name', 'phone_number', 'mail', 'public_oid']})
 
     # Add the client dictionary to the message dictionary
     return {"message": "Client was created successfully!"}.update(cdict)

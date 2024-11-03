@@ -31,7 +31,7 @@ class Employee(Common):
         self.mail = mail
         self.spe = spe
         self.phone_number = phone_number
-        self.workhop = workhop
+        self.workshop = workshop
         self.pic = pic
 
     def to_dict(self):

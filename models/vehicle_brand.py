@@ -7,13 +7,14 @@ from sqlalchemy import Column, String
 
 from models.common import Common
 
+
 class VehicleBrand(Common):
     """ Defines a Vehicle Brand"""
 
     __tablename__ = 'vehicle_brands'
-    name          = Column(String, nullable=False)
+    name = Column(String, nullable=False)
 
-    def __init__(self, name, workshop):
+    def __init__(self, name):
         """ Initialises a Brand
             - name ....... Brand name
             - workshop ... Workshop
