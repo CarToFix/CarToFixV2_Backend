@@ -3,7 +3,9 @@
 Created by:
     Emanuel Trias
 """
-from sqlalchemy import Column, String, Boolean
+from sqlalchemy import Column, String, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID
 
 from models.common import Common
 
@@ -16,16 +18,19 @@ class Task(Common):
     title             = Column(String, nullable=False)
     description       = Column(String, nullable=True)
     notes             = Column(String, nullable=True)
-    fully_initialised = Column(Boolean, default=False)
+    workshop_id       = Column(UUID(as_uuid=True), ForeignKey('workshops.id'), nullable=False)  # Foreign key referencing workshops
 
-    def __init__(self, vehicle, title, desc, notes, parts, wshop, emps, quote):
+    # Relationship
+    workshop      = relationship("Workshop", foreign_keys=[workshop_id], back_populates="tasks")  # Establishes relationship to Workshop
+
+    def __init__(self, vehicle, title, desc, notes, parts, workshop_id, emps, quote):
         """ Initializes a Task
             - vehicle .... vehicle in which to carry the task on
             - title ...... task title
             - desc ....... task description
             - notes ...... task ntoes
             - parts ...... required vehicle parts to complete the task
-            - wshop ...... workshop issuing the task
+            - workshop_id ...... workshop issuing the task
             - emps ....... employees who will participate in the task completion
         """
         self.done              = False
@@ -34,7 +39,7 @@ class Task(Common):
         self.description       = desc
         self.notes             = notes
         self.parts             = parts
-        self.workshop          = wshop
+        self.workshop_id          = workshop_id
         self.employees         = emps
         self.quote             = quote
         self.fully_initialised = False

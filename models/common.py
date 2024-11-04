@@ -27,15 +27,14 @@ class Common(Base, metaclass=AbstractDeclarativeMeta):
     """ Defines an abstract Common class """
     __abstract__ = True  # Prevents the creation of a Common table
 
-    oid        = Column(PGUUID(as_uuid=True), primary_key=True, unique=True, nullable=False)
+    id         = Column(PGUUID(as_uuid=True), primary_key=True, unique=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     def __init__(self):
-        self.oid = uuid.uuid4()  # Set the private attribute directly
+        self.id = uuid.uuid4()  # Set the private attribute directly
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
-        self.public_oid = self.__hash_uuid(self.oid)
 
     @abstractmethod
     def to_dict(self, hors):
@@ -46,18 +45,7 @@ class Common(Base, metaclass=AbstractDeclarativeMeta):
         models.storage.new(self)   # Instance is added to the session
         models.storage.save()      # Instance is saved to the db
 
-        print(f"New instance {self.public_oid} of type: {type(self).__name__} was created!")
-
-    def __hash_uuid(self, input_uuid):
-        """ Encodes an UUID using SHA256 algorithm """
-        # Convert the UUID to a string and encode it to bytes
-        uuid_str = str(input_uuid).encode()
-
-        # Hash the UUID using SHA-256
-        hash_object = hashlib.sha256(uuid_str)
-
-        # Return the hexadecimal digest of the hash
-        return hash_object.hexdigest()
+        print(f"New instance {self.id} of type: {type(self).__name__} was created!")
 
     def __eq__(self, other):
         """ Defines a custom comparison operator """

@@ -2,7 +2,6 @@ from fastapi import FastAPI, APIRouter
 
 # Import routes
 from .tasks import router as trouter
-from .dashboard import router as drouter
 from .clients import router as crouter
 from .employees import route as erouter
 from .parts import router as prouter
@@ -21,7 +20,6 @@ base_router = APIRouter(prefix="/api/v1")
 
 # Include imported routers in the base router
 base_router.include_router(trouter)
-base_router.include_router(drouter)
 base_router.include_router(crouter)
 base_router.include_router(erouter)
 base_router.include_router(prouter)
