@@ -30,5 +30,4 @@ class Permission():
             if k in hors.get('show', []) or k not in hors.get('hide', []):
                 dic[k.split('__', 1)[-1]] = v  # Use everything after the first '__'
 
-
         return dic

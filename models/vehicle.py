@@ -3,7 +3,9 @@
 Created by:
     Leonardo Rodriguez"""
     
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID
 
 
 from models.common import Common
@@ -16,8 +18,12 @@ class Vehicle(Common):
     color         = Column(String, nullable=False)
     miles         = Column(Integer, nullable=False)
     info          = Column(String, nullable=True)
+    workshop_id   = Column(UUID(as_uuid=True), ForeignKey('workshops.id'), nullable=False)
 
-    def __init__(self, workshop, plate, vtype, brand, model, color, miles, owner, work, info):
+    # Relationship
+    workshop      = relationship("Workshop", foreign_keys=[workshop_id], back_populates="vehicles")  # Allows access to the workshop from a vehicle
+
+    def __init__(self, workshop_id, plate, vtype, brand, model, color, miles, owner, info):
         """
         initialice a vehicle
         -workshop: From which workshop it is the data
@@ -28,7 +34,6 @@ class Vehicle(Common):
         -color: the color of the vehicle
         -miles: the miles a vehicle has when they enter in the workshop
         -owner: the owner of the vehicle
-        -work: the work that this vehicle needs now and the history of works
         -info: extra info like for example if the vehicle came with a scratch
         """
         self.plate = plate
@@ -38,10 +43,28 @@ class Vehicle(Common):
         self.color = color
         self.miles = miles
         self.owner = owner
-        self.work  = work
+        self.work  = None
         self.info  = info
-        super().__init__(workshop)
+        self.workshop_id = workshop_id
+        super().__init__()
 
-    def to_dict(self):
-        """ Returns a dictionary representation for the instance """
-        return self.__dict__
+    def to_dict(self, hors={}):
+        """ Returns a dictionary representation of the class 
+            - hors: hidde or show, dictionary that defines which attributes to return
+        """
+        dic = {}
+
+        show_keys = set(hors.get('show', []))
+        hide_keys = set(hors.get('hide', []))
+
+        for k, v in self.__dict__.items():
+            # If 'show' is provided, only include those keys unless they're also in 'hide'
+            if show_keys:
+                if k in show_keys and k not in hide_keys:
+                    dic[k.split('__', 1)[-1]] = v  # Use everything after the first '__'
+            else:
+                # If 'show' is not provided, hide those in 'hide'
+                if k not in hide_keys:
+                    dic[k.split('__', 1)[-1]] = v  # Use everything after the first '__'
+
+        return dic

@@ -31,7 +31,5 @@ async def create_quote(client_request: CreateQuote):
 
     quote.save()
 
-    # qdict = quote.to_dict(
-    #   {'show': ['price', 'created_by' 'task', 'payment', 'warranty', 'installments', 'ddprice', 'sent', 'active', 'confirmed', 'vehicle']})
-    qdict = quote.to_dict()
-    return {"message": "the Quote has been created successfully"}.update(qdict)
+    qdict = quote.to_dict({'show': ['price', 'created_by' 'task', 'payment', 'warranty', 'installments', 'ddprice', 'sent', 'active', 'confirmed', 'vehicle', 'id']})
+    return {"message": "the Quote has been created successfully"} | qdict
