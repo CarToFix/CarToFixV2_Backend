@@ -3,9 +3,10 @@
 Created by:
     Leonardo Rodriguez
 """
-from sqlalchemy import Column, String, JSONB
+from sqlalchemy import Column, String
+from sqlalchemy.dialects.postgresql import JSONB
 
-from common import Common
+from models.common import Common
 
 
 class Specialisation(Common):
@@ -27,6 +28,15 @@ class Specialisation(Common):
 
         super().__init__()
 
-    def to_dict(self):
-        """Returns a dictionary representation for the instance"""
-        return self.__dict__
+    def to_dict(self, hors={}):
+        """ Returns a dictionary representation of the class 
+            - hors: hidde or show, dictionary that defines which attributes to return
+        """
+        dic = {}
+
+        for k, v in self.__dict__.items():
+            # Check if the key should be shown or hidden
+            if k in hors.get('show', []) or k not in hors.get('hide', []):
+                dic[k.split('__', 1)[-1]] = v  # Use everything after the first '__'
+
+        return dic

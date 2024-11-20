@@ -8,13 +8,14 @@ from sqlalchemy import Column, String
 
 from models.common import Common
 
+
 class VehicleModel(Common):
     """the class vehicle brand that represents the model of a Vehicle"""
 
     __tablename__ = 'vehicle_models'
-    name          = Column(String, nullable=False)
+    name = Column(String, nullable=False)
 
-    def __init__(self, workshop, name):
+    def __init__(self, name):
         """
         initialice a brand of a vehicle
         -workshop: From which workshop it is the data
@@ -24,6 +25,15 @@ class VehicleModel(Common):
         self.name = name
         super().__init__()
 
-    def to_dict(self):
-        """Returns a dictionary representation for the instance"""
-        return self.__dict__
+    def to_dict(self, hors={}):
+        """ Returns a dictionary representation of the class 
+            - hors: hidde or show, dictionary that defines which attributes to return
+        """
+        dic = {}
+
+        for k, v in self.__dict__.items():
+            # Check if the key should be shown or hidden
+            if k in hors.get('show', []) or k not in hors.get('hide', []):
+                dic[k.split('__', 1)[-1]] = v  # Use everything after the first '__'
+
+        return dic
