@@ -4,6 +4,8 @@ import uuid
 from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException, APIRouter
 from models.part import Part
+from models.workshop import Workshop
+from models import storage
 
 router = APIRouter()  # creates a route
 
@@ -27,5 +29,18 @@ async def create_part(client_request: CreatePart):
 
     part.save()
 
-    pdict = part.to_dict({'show': ['name', 'brand', 'description', 'model', 'size', 'status' 'workshop_id', 'id']})
+    pdict = part.to_dict({'show': [
+                         'name', 'brand', 'description', 'model', 'size', 'status' 'workshop_id', 'id']})
     return {"message": "the part has been created successfully"} | pdict
+
+
+@router.get("/workshop<workshop_id>", status_code=200)
+async def list_parts(workshop):
+    """a function to search the parts of a workshop"""
+    work = storage.get(Workshop, workshop)
+    if work is not Workshop:
+        return ("error: the workshop can`t be found")
+    part = work.to_dict({'show': ['parts']})
+    parts = [part.todict({'show': ['name']})
+             for part in Workshop.parts]
+    return (parts)
