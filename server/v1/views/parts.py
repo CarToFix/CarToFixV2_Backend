@@ -34,7 +34,7 @@ async def create_part(client_request: CreatePart):
     return {"message": "the part has been created successfully"} | pdict
 
 
-@router.get("/workshop<workshop_id>", status_code=200)
+@router.get("/parts<workshop_id>", status_code=200)
 async def list_parts(workshop):
     """a function to search the parts of a workshop"""
     work = storage.get(Workshop, workshop)

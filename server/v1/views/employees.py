@@ -35,7 +35,7 @@ async def create_employee(client_request: CreateEmployee):
     return {"message": "the employee has been created successfully"} | edict
 
 
-@route.get("/workshop<workshop_id>", status_code=200)
+@route.get("/employees<workshop_id>", status_code=200)
 async def search_workshop_employee(workshop):
     """a function to search the employees of a workshop and the owner"""
     work = storage.get(Workshop, workshop)
